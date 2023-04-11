@@ -1,19 +1,22 @@
-#Sun Mar 26 15:24:45 IST 2023
+#Sun Mar 26 20:04:35 IST 2023
 path.4=14/classes.dex
 path.3=13/classes.dex
 path.2=0/classes.dex
 path.1=0/classes.dex
+path.6=classes2.dex
 path.5=9/classes.dex
 path.0=classes.dex
-base.4=C\:\\Newapp\\AwesomeProject\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
-base.3=C\:\\Newapp\\AwesomeProject\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.2=C\:\\Newapp\\AwesomeProject\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.1=C\:\\Newapp\\AwesomeProject\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
-base.0=C\:\\Newapp\\AwesomeProject\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.4=C\:\\selfProjects\\Assign_Intern\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.3=C\:\\selfProjects\\Assign_Intern\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
+base.2=C\:\\selfProjects\\Assign_Intern\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.1=C\:\\selfProjects\\Assign_Intern\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
+base.0=C\:\\selfProjects\\Assign_Intern\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
+renamed.6=classes7.dex
 renamed.5=classes6.dex
+base.6=C\:\\selfProjects\\Assign_Intern\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
 renamed.4=classes5.dex
-base.5=C\:\\Newapp\\AwesomeProject\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
+base.5=C\:\\selfProjects\\Assign_Intern\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
