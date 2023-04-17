@@ -1,11 +1,66 @@
 import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, Pressable, Alert, Modal, Image } from 'react-native'
 import { Input } from '../../CommanStyles/InputSyles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modals } from '../../CommanStyles/ModalStyles';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const MainProfile = () => {
     const [modalVisible, setModalVisible] = useState(false);
+    const [name, setname] = useState("")
+    const [password, setpassword] = useState("")
+    const [iD, setID] = useState("")
+    const [updatedName, setupdatedName] = useState("")
+    const [updatedPass, setupdatedPass] = useState("")
+    useEffect(() => {
+        const test = async () => {
+            const value = await AsyncStorage.getItem('Userdetails')
+            let user = value;
+            setname(JSON.parse(user))
+
+
+            const value1 = await AsyncStorage.getItem('password')
+            let user1 = value1;
+            setpassword(JSON.parse(user1))
+
+
+            const value2 = await AsyncStorage.getItem('ID')
+            let user2 = value2;
+            console.log(user2, "user2");
+            setID(JSON.parse(user2))
+            // setpassword(JSON.parse(user2))
+        }
+        test();
+    }, [])
+
+    const UpdateProfile = async () => {
+        console.log("Test");
+        const data = {
+            name: updatedName,
+            password: updatedPass,
+            status: 'Active',
+            mobileNo: "7976154612",
+            serviceStartDate: "2023-04-14T08:57:36.131+00:00"
+
+
+        }
+        try {
+            const response = await fetch(`http://192.168.13.185:9000/api/cleaners/${iD}`, {
+                method: "PATCH", // or 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            console.log("Success:", result);
+
+        } catch (error) {
+            console.log(error, 'jj')
+
+        }
+    }
     return (
         <>
             <View style={styles.MainView}>
@@ -13,9 +68,9 @@ const MainProfile = () => {
                     <Text style={styles.headerText}>Profile</Text>
                 </View>
                 <View style={styles.ProfileView}>
-                    <Text style={styles.ProfileText}>Name : Abhishek Jangid</Text>
+                    <Text style={styles.ProfileText}>Name :{name} </Text>
                     <Text style={styles.ProfileText}>Email : abhishek.jangid643@gmail.com</Text>
-                    <Text style={styles.ProfileText}>Address : Central Spine Road ,Jaipur</Text>
+                    <Text style={styles.ProfileText}>password :{password}</Text>
                 </View>
                 <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={() => setModalVisible(true)}>
                     <Text style={Input.SignUpButtonText}>Edit Profile</Text>
@@ -34,9 +89,9 @@ const MainProfile = () => {
                                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2976/2976286.png" }} style={Modals.CrossIcon} />
                                 </TouchableOpacity>
                             </View>
-                            <TextInput placeholder='Name' placeholderTextColor={"black"} style={Modals.Input} />
-                            <TextInput placeholder='Address' placeholderTextColor={"black"} style={Modals.Input} />
-                            <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={() => setModalVisible(true)}>
+                            <TextInput placeholder={name} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedName(value) }} />
+                            <TextInput placeholder={password} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedPass(value) }} />
+                            <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={UpdateProfile}>
                                 <Text style={Input.SignUpButtonText}>Update Profile</Text>
                             </TouchableOpacity>
                         </View>

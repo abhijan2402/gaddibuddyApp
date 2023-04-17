@@ -36,9 +36,11 @@ export const Input = StyleSheet.create({
         alignItems: "center"
     },
     MainView: {
+        display: "flex",
+        flex: 2,
         width: windoWidth,
         height: windoHeight,
-        backgroundColor: "white"
+        backgroundColor: "white",
     },
     ALreadyView: {
         display: "flex",
