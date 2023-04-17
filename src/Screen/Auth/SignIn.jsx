@@ -20,20 +20,20 @@ const SignIn = ({ navigation }) => {
 
     const Login = async () => {
         const data = {
-            // mobileNo: "7976114618",
-            // password: "qwerty123"
+            // mobileNo: "8822881085",
+            // password: "dhullo_nabajit"
             mobileNo: MobNum,
             password: passwod
         }
         try {
-            if (MobNum == "") {
-                throw "Please enter mobile num"
-            }
-            if (passwod == "")
-                throw "please enter password"
+            // if (MobNum == "") {
+            //     throw "Please enter mobile num"
+            // }
+            // if (passwod == "")
+            //     throw "please enter password"
 
             setloader(true)
-            const response = await fetch("http://192.168.13.185:9000/api/cleaners/login", {
+            const response = await fetch("http://192.168.0.185:9000/api/cleaners/login", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",

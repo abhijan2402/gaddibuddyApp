@@ -15,6 +15,7 @@ const Signup = ({ navigation }) => {
     const [toastTextColorState, setToastTextColorState] = useState('black');
     const [toastMessage, setToastMessage] = useState('');
     const SignUp = async () => {
+        console.log("hiii");
         const data = {
             name: name,
             mobileNo: phoneNumber,
@@ -25,18 +26,19 @@ const Signup = ({ navigation }) => {
         }
         try {
             setloader(true)
-            const response = await fetch("http://192.168.13.185:9000/api/cleaners/addCleaner", {
+            const response = await fetch("http://192.168.0.185:9000/api/cleaners/addCleaner", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             });
+            console.log("kkk");
             const result = await response.json();
             console.log("Success:", result);
-            await AsyncStorage.setItem('Userdetails', JSON.stringify(result))
-            const value = await AsyncStorage.getItem('Userdetails')
-            console.log(value, "i am value")
+            // await AsyncStorage.setItem('Userdetails', JSON.stringify(result))
+            // const value = await AsyncStorage.getItem('Userdetails')
+            // console.log(value, "i am value")
             setloader(false)
             setToastMessage("Cleaner Created");
             setToastTextColorState("white")
@@ -45,6 +47,7 @@ const Signup = ({ navigation }) => {
             childRef.current.showToast();
             navigation.navigate("HomeNav")
         } catch (error) {
+            console.log("ppp");
             console.error("Error:", error);
             setToastMessage(error);
             setToastTextColorState("white")
