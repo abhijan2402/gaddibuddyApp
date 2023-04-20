@@ -2,7 +2,39 @@ import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'rea
 import React, { useEffect, useState } from 'react'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
 const Account = ({ navigation }) => {
+  const { userID, user } = useSelector(state => state.user);
+  const [UserDetai, setUserDetai] = useState("")
+  const [name, setname] = useState("")
+  const [password, setpassword] = useState("")
+  useEffect(() => {
+
+    // test();
+    // Dataset()
+  }, [])
+
+  const Dataset = () => {
+    console.log(userID, "hhh");
+  }
+  const test = async () => {
+    const value = await AsyncStorage.getItem('Userdetails')
+    let user = value;
+    setname(JSON.parse(user))
+
+
+    const value1 = await AsyncStorage.getItem('password')
+    let user1 = value1;
+    setpassword(JSON.parse(user1))
+
+
+    // const value2 = await AsyncStorage.getItem('ID')
+    // let user2 = value2;
+    // console.log(user2, "user2");
+    // setID(JSON.parse(user2))
+    // setpassword(JSON.parse(user2))
+  }
   return (
     <View style={styles.MainView}>
       <View style={styles.Header}>
@@ -13,7 +45,7 @@ const Account = ({ navigation }) => {
         <View style={styles.MidView}>
           <View style={styles.NameView}>
             <Text style={styles.NameText}>Hello</Text>
-            <Text style={[styles.NameText, { color: "green", marginLeft: "2%" }]}>John Doe</Text>
+            <Text style={[styles.NameText, { color: "green", marginLeft: "2%" }]}>hhh</Text>
           </View>
           <Text style={[styles.NameText, { marginVertical: 5 }]} >+91 98565525255</Text>
         </View>
@@ -25,34 +57,34 @@ const Account = ({ navigation }) => {
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/833/833314.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>Job History</Text>
         </TouchableOpacity>
-        <View style={styles.OptionView}>
+        {/* <View style={styles.OptionView}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/482/482541.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>Payments</Text>
-        </View>
-        <View style={styles.OptionView}>
+        </View> */}
+        {/* <View style={styles.OptionView}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3388/3388614.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>Help</Text>
-        </View>
-        <View style={styles.OptionView}>
+        </View> */}
+        {/* <View style={styles.OptionView}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/471/471664.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>FAQ'S</Text>
-        </View>
-        <View style={styles.OptionView}>
+        </View> */}
+        {/* <View style={styles.OptionView}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9131/9131981.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>About Dhullo</Text>
-        </View>
+        </View> */}
         <View style={styles.OptionView}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/992/992680.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>Logout</Text>
         </View>
-        <View style={[styles.OptionView, { marginHorizontal: 20, marginVertical: 10 }]}>
+        {/* <View style={[styles.OptionView, { marginHorizontal: 20, marginVertical: 10 }]}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9131/9131981.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>Refer a friend</Text>
-        </View>
-        <View style={[styles.OptionView, { marginHorizontal: 20, marginVertical: 10 }]}>
+        </View> */}
+        {/* <View style={[styles.OptionView, { marginHorizontal: 20, marginVertical: 10 }]}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9131/9131981.png" }} style={styles.Logo} />
           <Text style={styles.OptionText}>Active Dully Option</Text>
-        </View>
+        </View> */}
       </View>
 
     </View >

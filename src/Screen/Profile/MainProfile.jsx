@@ -5,8 +5,9 @@ import { Modals } from '../../CommanStyles/ModalStyles';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useDispatch, useSelector } from 'react-redux';
 const MainProfile = () => {
+    const { userID, user } = useSelector(state => state.user);
     const [modalVisible, setModalVisible] = useState(false);
     const [name, setname] = useState("")
     const [password, setpassword] = useState("")
@@ -14,39 +15,44 @@ const MainProfile = () => {
     const [updatedName, setupdatedName] = useState("")
     const [updatedPass, setupdatedPass] = useState("")
     useEffect(() => {
-        const test = async () => {
-            const value = await AsyncStorage.getItem('Userdetails')
-            let user = value;
-            setname(JSON.parse(user))
 
-
-            const value1 = await AsyncStorage.getItem('password')
-            let user1 = value1;
-            setpassword(JSON.parse(user1))
-
-
-            const value2 = await AsyncStorage.getItem('ID')
-            let user2 = value2;
-            console.log(user2, "user2");
-            setID(JSON.parse(user2))
-            // setpassword(JSON.parse(user2))
-        }
         test();
+        Dataset();
     }, [])
+    const Dataset = () => {
+        console.log(userID, "hhh");
+    }
 
+    const test = async () => {
+        const value = await AsyncStorage.getItem('Userdetails')
+        let user = value;
+        setname(JSON.parse(user))
+
+
+        const value1 = await AsyncStorage.getItem('password')
+        let user1 = value1;
+        setpassword(JSON.parse(user1))
+
+
+        const value2 = await AsyncStorage.getItem('ID')
+        let user2 = value2;
+        console.log(user2, "user2");
+        setID(JSON.parse(user2))
+        // setpassword(JSON.parse(user2))
+    }
     const UpdateProfile = async () => {
         console.log("Test");
         const data = {
             name: updatedName,
             password: updatedPass,
             status: 'Active',
-            mobileNo: "7976154612",
+            mobileNo: "9799255889",
             serviceStartDate: "2023-04-14T08:57:36.131+00:00"
 
 
         }
         try {
-            const response = await fetch(`http://192.168.13.185:9000/api/cleaners/${iD}`, {
+            const response = await fetch(`http://192.168.0.185:9000/api/cleaners/${iD}`, {
                 method: "PATCH", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",

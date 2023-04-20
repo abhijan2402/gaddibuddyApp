@@ -1,13 +1,25 @@
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from '../../CommanStyles/InputSyles';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserID, setUserDetails } from '../../redux/actions/userAction';
+
 const BoardingScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const { userID } = useSelector(state => state.user);
+    const user = "hey"
+    // useEffect(() => {
+    //     dispatch(setUserID(user))
+    // }, [])
+    // const test = () => {
+    //     console.log(userID, "jhh")
+    // }
     return (
         <View style={Input.MainView}>
             <View style={Input.LogoView}>
-                <Image source={{ uri: "https://s3-alpha-sig.figma.com/img/81c2/a2f9/ad6fcc725874137d639c942051eefd36?Expires=1681689600&Signature=axMxo--hkb-qpGFOYQiujj6YRLJoHt7HpUW-u382d0IMTJXa~jBNdYu4swZNT83Qzifo5RUHutVEUhFoWMwSODVZ39vSrJLHevKJT17QWdXaUe3sko5q3Wk9qap1X6ALJlWTRMAiG68rZkeP6monpkftOt8dgmBXoFJfctPBNe1eLOLkUkRqooNXjytvDJR5vi8-1KKK~hSZuLx6Y-LdC1kpsBG--iE~9kOEk~aVUJ4cLlIcHhWF-vlxHpO1bParSWIG-GTUH1DfqjeQH-bcx69BncgXYIEqan0ZIBs20rQes1XFl9lum98pPvG5pESSGwx~Q~qMX6Bg6cHR0CHvgQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" }} style={[Input.ImageLogo]} />
+                <Image source={require("../../assests/logo.png")} style={[Input.ImageLogo]} />
             </View>
             <View style={styles.Footer}>
                 <View style={styles.WelcomeView}>
@@ -17,12 +29,12 @@ const BoardingScreen = ({ navigation }) => {
                     <TouchableOpacity style={[styles.BtnViewMain, { borderColor: 'white' }]} onPress={() => navigation.navigate('SignIn')}>
                         <Text style={[styles.BtnText, { color: "white" }]}>Login</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.BtnViewMain, { backgroundColor: "white", borderWidth: 0 }]} onPress={() => navigation.navigate('SignUp')}>
+                    <TouchableOpacity style={[styles.BtnViewMain, { backgroundColor: "white", borderWidth: 0 }]} >
                         <Text style={[styles.BtnText, { color: "#EE7523" }]}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </View >
     )
 }
 
