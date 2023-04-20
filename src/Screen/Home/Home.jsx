@@ -11,7 +11,7 @@ const Home = ({ navigation }) => {
         <Text style={[styles.HomeText, { color: "#EE7523" }]}>Select all Jobs</Text>
       </View>
       <View>
-        <JobAvailable NOJ="50" Type="Monthly" onPress={() => navigation.navigate('JobDetail')} />
+        <JobAvailable NOJ="50" Type="Monthly" onPress={() => navigation.navigate('JobList')} />
         <JobAvailable NOJ="28" Type="Weekly" onPress={() => navigation.navigate('JobDetail')} />
         <JobAvailable NOJ="78" Type="One Time" onPress={() => navigation.navigate('JobDetail')} />
       </View>

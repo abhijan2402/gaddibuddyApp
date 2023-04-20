@@ -12,7 +12,7 @@ const Account = ({ navigation }) => {
   useEffect(() => {
 
     // test();
-    // Dataset()
+    Dataset()
   }, [])
 
   const Dataset = () => {
@@ -45,9 +45,9 @@ const Account = ({ navigation }) => {
         <View style={styles.MidView}>
           <View style={styles.NameView}>
             <Text style={styles.NameText}>Hello</Text>
-            <Text style={[styles.NameText, { color: "green", marginLeft: "2%" }]}>hhh</Text>
+            <Text style={[styles.NameText, { color: "green", marginLeft: "2%" }]}>{userID.name}</Text>
           </View>
-          <Text style={[styles.NameText, { marginVertical: 5 }]} >+91 98565525255</Text>
+          <Text style={[styles.NameText, { marginVertical: 5 }]} >+91-{userID.mobileNo}</Text>
         </View>
         <TouchableOpacity style={styles.OptionView} onPress={() => navigation.navigate('MainProfile')}>
           <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/747/747376.png" }} style={styles.Logo} />

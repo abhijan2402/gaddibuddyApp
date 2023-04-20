@@ -3,42 +3,49 @@ export const JobList = [
         id: 1,
         Name: 'Car Wash',
         Model: "ELITE i20 -KA MG 4602",
-        Address: "Address"
+        Address: "Address",
+        TOS: "Monthly",
     },
     {
         id: 2,
         Name: 'Car Wash',
         Model: "ELITE i20 -KA MG 4602",
-        Address: "Address"
+        Address: "Address",
+        TOS: "Weekly",
     },
     {
         id: 3,
         Name: 'Car Wash',
         Model: "ELITE i20 -KA MG 4602",
-        Address: "Address"
+        Address: "Address",
+        TOS: "Daily",
     },
     {
         id: 4,
         Name: 'Car Wash',
         Model: "ELITE i20 -KA MG 4602",
-        Address: "Address"
+        Address: "Address",
+        TOS: "Daily",
     },
     {
         id: 5,
         Name: 'Car Wash',
         Model: "ELITE i20 -KA MG 4602",
-        Address: "Address"
+        Address: "Address",
+        TOS: "Daily",
     },
     {
         id: 6,
         Name: 'Car Wash',
         Model: "ELITE i20 -KA MG 4602",
-        Address: "Address"
+        Address: "Address",
+        TOS: "Monthly",
     },
     {
         id: 7,
         Name: 'Car Wash',
         Model: "ELITE i20 -KA MG 4602",
-        Address: "Address"
+        Address: "Address",
+        TOS: "Weekly",
     },
 ]

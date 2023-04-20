@@ -30,67 +30,67 @@ const SignIn = ({ navigation }) => {
             password: passwod
         }
         try {
-            // if (MobNum == "") {
-            //     throw "Please enter mobile num"
-            // }
-            // if (passwod == "")
-            //     throw "please enter password"
+            if (MobNum == "") {
+                throw "Please enter mobile num"
+            }
+            if (passwod == "")
+                throw "please enter password"
 
-            // setloader(true)
-            // const response = await fetch("http://192.168.0.185:9000/api/cleaners/login", {
-            //     method: "POST", // or 'PUT'
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify(data),
-            // });
+            setloader(true)
+            const response = await fetch("http://192.168.0.185:9000/api/cleaners/login", {
+                method: "POST", // or 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
 
-            // const result = await response.json();
-            // console.log("Success:", result);
-            // const finalVal = result.cleaner
+            const result = await response.json();
+            console.log("Success:", result);
+            const finalVal = result.cleaner
             // const naa = finalVal.name;
             // console.log(naa, "naa");
-            // dispatch(setUserID(JSON.stringify(naa)))
-            // // dispatch(setUserDetails("hii"))
-            // console.log(userID, "i am valueooo");
+            dispatch(setUserID(finalVal))
+            // dispatch(setUserDetails("hii"))
+            console.log(userID, "i am valueooo");
 
 
-            // const trap = result.cleaner.name
-            // const JSONValue = JSON.stringify(trap)
-            // // console.log(JSONValue, "JSONValue");
+            const trap = result.cleaner.name
+            const JSONValue = JSON.stringify(trap)
+            // console.log(JSONValue, "JSONValue");
 
 
-            // console.log(result.cleaner, "name");
-            // const pass = result.cleaner.password;
-            // const JSONValue1 = JSON.stringify(pass)
+            console.log(result.cleaner, "name");
+            const pass = result.cleaner.password;
+            const JSONValue1 = JSON.stringify(pass)
 
-            // // const MobNum = result.cleaner.MobNum
-            // // const JSONValue2 = JSON.stringify(MobNum)
+            // const MobNum = result.cleaner.MobNum
+            // const JSONValue2 = JSON.stringify(MobNum)
 
-            // const serviceStartDate = result.cleaner.serviceStartDate
-            // const JSONValue3 = JSON.stringify(serviceStartDate)
+            const serviceStartDate = result.cleaner.serviceStartDate
+            const JSONValue3 = JSON.stringify(serviceStartDate)
 
-            // const ID = result.cleaner._id
-            // const JSONValue4 = JSON.stringify(ID)
-
-
-            // await AsyncStorage.setItem('Userdetails', JSONValue)
-            // await AsyncStorage.setItem('password', JSONValue1)
-            // // await AsyncStorage.setItem('MobNum', JSONValue2)
-            // await AsyncStorage.setItem('ID', JSONValue4)
-            // await AsyncStorage.setItem('serviceStartDate', JSONValue3)
+            const ID = result.cleaner._id
+            const JSONValue4 = JSON.stringify(ID)
 
 
+            await AsyncStorage.setItem('Userdetails', JSONValue)
+            await AsyncStorage.setItem('password', JSONValue1)
+            // await AsyncStorage.setItem('MobNum', JSONValue2)
+            await AsyncStorage.setItem('ID', JSONValue4)
+            await AsyncStorage.setItem('serviceStartDate', JSONValue3)
 
 
-            // // const value = await AsyncStorage.getItem('Userdetails')
-            // // console.log(value, "i am value")
-            // setloader(false)
-            // setToastMessage("User Logged In");
-            // setToastTextColorState("white")
-            // setToastColorState("green")
-            // // setLoading(false)
-            // childRef.current.showToast();
+
+
+            // const value = await AsyncStorage.getItem('Userdetails')
+            // console.log(value, "i am value")
+            setloader(false)
+            setToastMessage("User Logged In");
+            setToastTextColorState("white")
+            setToastColorState("green")
+            // setLoading(false)
+            childRef.current.showToast();
             navigation.navigate("HomeNav")
         } catch (error) {
             console.error("Error:", error);
@@ -114,7 +114,7 @@ const SignIn = ({ navigation }) => {
                     <Image source={require("../../assests/logo.png")} style={[Input.ImageLogo]} />
                 </View>
                 <View>
-                    <TextInput placeholder='Enter Phone Number' style={Input.InputField} onChangeText={(value) => { setMobNum(value) }} />
+                    <TextInput placeholder='Enter Phone Number' style={Input.InputField} onChangeText={(value) => { setMobNum(value) }} keyboardType='numeric' />
                     <TextInput placeholder='Enter Password' style={Input.InputField} onChangeText={(value) => { setPasswod(value) }} />
                     <TouchableOpacity style={Input.SignUpButton} onPress={Login}>
                         {

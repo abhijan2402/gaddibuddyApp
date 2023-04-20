@@ -6,6 +6,11 @@ const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
+import { setUserID, setUserDetails } from '../../redux/actions/userAction';
+
+
+
+
 const MainProfile = () => {
     const { userID, user } = useSelector(state => state.user);
     const [modalVisible, setModalVisible] = useState(false);
@@ -14,6 +19,11 @@ const MainProfile = () => {
     const [iD, setID] = useState("")
     const [updatedName, setupdatedName] = useState("")
     const [updatedPass, setupdatedPass] = useState("")
+
+
+    const dispatch = useDispatch();
+
+
     useEffect(() => {
 
         test();
@@ -40,14 +50,15 @@ const MainProfile = () => {
         setID(JSON.parse(user2))
         // setpassword(JSON.parse(user2))
     }
+
     const UpdateProfile = async () => {
         console.log("Test");
         const data = {
             name: updatedName,
             password: updatedPass,
-            status: 'Active',
-            mobileNo: "9799255889",
-            serviceStartDate: "2023-04-14T08:57:36.131+00:00"
+            status: userID.status,
+            mobileNo: userID.mobileNo,
+            serviceStartDate: userID.serviceStartDate
 
 
         }
@@ -60,7 +71,10 @@ const MainProfile = () => {
                 body: JSON.stringify(data),
             });
             const result = await response.json();
-            console.log("Success:", result);
+            console.log("Success!!!!!:", result);
+            const finalVal = result.cleaner
+            dispatch(setUserID(finalVal))
+            console.log(userID, "i am valueooo");
 
         } catch (error) {
             console.log(error, 'jj')
@@ -74,9 +88,9 @@ const MainProfile = () => {
                     <Text style={styles.headerText}>Profile</Text>
                 </View>
                 <View style={styles.ProfileView}>
-                    <Text style={styles.ProfileText}>Name :{name} </Text>
+                    <Text style={styles.ProfileText}>Name :{userID.name} </Text>
                     <Text style={styles.ProfileText}>Email : abhishek.jangid643@gmail.com</Text>
-                    <Text style={styles.ProfileText}>password :{password}</Text>
+                    <Text style={styles.ProfileText}>password :{userID.password}</Text>
                 </View>
                 <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={() => setModalVisible(true)}>
                     <Text style={Input.SignUpButtonText}>Edit Profile</Text>
@@ -95,8 +109,8 @@ const MainProfile = () => {
                                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2976/2976286.png" }} style={Modals.CrossIcon} />
                                 </TouchableOpacity>
                             </View>
-                            <TextInput placeholder={name} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedName(value) }} />
-                            <TextInput placeholder={password} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedPass(value) }} />
+                            <TextInput placeholder={userID.name} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedName(value) }} />
+                            <TextInput placeholder={userID.password} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedPass(value) }} />
                             <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={UpdateProfile}>
                                 <Text style={Input.SignUpButtonText}>Update Profile</Text>
                             </TouchableOpacity>
