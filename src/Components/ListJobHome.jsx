@@ -4,10 +4,11 @@ import React from 'react'
 const ListJobHome = ({ item, onPress }) => {
     return (
         <TouchableOpacity style={styles.MainView} onPress={onPress}>
-            <Text style={styles.MainViewText}>{item.Name}</Text>
-            <Text style={styles.MainViewText}>{item.Model}</Text>
-            <Text style={styles.MainViewText}>{item.Address}</Text>
-            <Text style={styles.MainViewText}>{item.TOS}</Text>
+            <Text style={styles.MainViewText}>Status -{item.serviceStatus}</Text>
+            <Text style={styles.MainViewText}>Name{item.Name}</Text>
+            <Text style={styles.MainViewText}>Model{item.Model}</Text>
+            <Text style={styles.MainViewText}>Address{item.Address}</Text>
+            <Text style={styles.MainViewText}>Service Type - {item.serviceType}</Text>
         </TouchableOpacity>
     )
 }
