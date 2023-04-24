@@ -13,7 +13,7 @@ const Home = ({ navigation }) => {
   const ListJobs = async () => {
     console.log("hii");
     try {
-      const response = await fetch(`http://192.168.0.185:9000/api/scheduledJobs/`, {
+      const response = await fetch(`http://192.168.4.185:9000/api/scheduledJobs/`, {
         method: "GET", // or 'PUT'
       });
       const result = await response.json();

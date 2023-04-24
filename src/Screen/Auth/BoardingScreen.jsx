@@ -29,7 +29,7 @@ const BoardingScreen = ({ navigation }) => {
                     <TouchableOpacity style={[styles.BtnViewMain, { borderColor: 'white' }]} onPress={() => navigation.navigate('SignIn')}>
                         <Text style={[styles.BtnText, { color: "white" }]}>Login</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.BtnViewMain, { backgroundColor: "white", borderWidth: 0 }]} >
+                    <TouchableOpacity style={[styles.BtnViewMain, { backgroundColor: "white", borderWidth: 0 }]} onPress={() => navigation.navigate('SignUp')}>
                         <Text style={[styles.BtnText, { color: "#EE7523" }]}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>

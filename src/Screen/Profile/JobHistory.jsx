@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react'
 import FakeData from '../../Data/FakeData';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import { useDispatch, useSelector } from 'react-redux';
+
 import DatePicker from 'react-native-date-picker'
+import { ActivityIndicator } from 'react-native-paper';
 export default function () {
+    const { userID, user } = useSelector(state => state.user);
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [date1, setDate1] = useState(new Date())
@@ -12,45 +16,75 @@ export default function () {
     const [orderdate1, setOrdersDate1] = useState('');
     const [orderdate2, setOrderDate2] = useState("")
     const [SearchArray, setSearchArray] = useState([])
+    const [DateWIseData, setDateWIseData] = useState([])
+    const [Loading, setLoading] = useState(false)
+    const [iD, setID] = useState("")
+    useEffect(() => {
+        console.log(userID);
+        setID(userID._id)
+    }, [])
+
     function FIlterDate(dates) {
         const firDate = JSON.stringify(dates)
         let dateArray1 = firDate.split("-");
         let dateString1 = `${dateArray1[2]}`;
         const DateStr1 = dateString1.split("T");
+
         return DateStr1[0]
     }
-    const CheckFilter = () => {
-        let ResultantArray = []
-        const thee = FIlterDate(date)
-        console.log(thee, "i m thee")
-        // console.log(orderdate1);
-        const thee1 = FIlterDate(date1)
-        console.log(thee1, "i m thee1")
-        let i = 0;
-        for (i = 0; i < FakeData.length; i++) {
-            const firDate3 = JSON.stringify(FakeData[i].Date)
-            let dateArray3 = firDate3.split("-");
-            let dateString3 = `${dateArray3[2]}`;
-            const DateStr3 = dateString3.split("T");
-            if (DateStr3[0] < thee || DateStr3[0] > thee1) {
-                console.log(DateStr3[0], "not valid")
-            }
-            else {
-                console.log(DateStr3[0], "valid")
-                ResultantArray.push(FakeData[i])
-                // console.log(ResultantArray, "i am array")
-                setSearchArray(ResultantArray)
-                // console.log("valid");
-            }
+    const CheckFilter = async () => {
+        console.log(date, "I amdate");
+        setLoading(true)
+        const data = {
+            start: date,
+            end: date1
         }
+        try {
+            const response = await fetch(`http://192.168.4.185:9000/api/scheduledJobs/ByDate/cleaner/${iD}`, {
+                method: "POST", // or 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            console.log("Success:", result);
+            let mainRes = result.scheduledJobs
+            setDateWIseData(mainRes);
+            console.log(DateWIseData, "i am dare");
+            setLoading(false)
+        } catch (error) {
+            console.log(error);
+            setLoading(false)
+
+        }
+        // let ResultantArray = []
+        // const thee = FIlterDate(date)
+        // console.log(thee, "i m thee")
+        // // console.log(orderdate1);
+        // const thee1 = FIlterDate(date1)
+        // console.log(thee1, "i m thee1")
+        // let i = 0;
+        // for (i = 0; i < FakeData.length; i++) {
+        //     const firDate3 = JSON.stringify(FakeData[i].Date)
+        //     let dateArray3 = firDate3.split("-");
+        //     let dateString3 = `${dateArray3[2]}`;
+        //     const DateStr3 = dateString3.split("T");
+        //     if (DateStr3[0] < thee || DateStr3[0] > thee1) {
+        //         console.log(DateStr3[0], "not valid")
+        //     }
+        //     else {
+        //         console.log(DateStr3[0], "valid")
+        //         ResultantArray.push(FakeData[i])
+        //         // console.log(ResultantArray, "i am array")
+        //         setSearchArray(ResultantArray)
+        //         // console.log("valid");
+        //     }
+        // }
     }
-    useEffect(() => {
-        setSearchArray(FakeData)
-
-
-    }, [])
     const Reset = () => {
-        setSearchArray(FakeData)
+        // setSearchArray(FakeData)
+        setDateWIseData([])
     }
     return (
         <>
@@ -103,7 +137,7 @@ export default function () {
                 </View>
                 <View style={{ display: 'flex', flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                     <TouchableOpacity onPress={CheckFilter} style={{ width: windoWidth / 2.2, marginHorizontal: 4, backgroundColor: "lightgrey", borderRadius: 8, paddingVertical: 10, marginVertical: 20, justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{ fontSize: 15, color: "black", fontWeight: "800" }}>filter</Text>
+                        <Text style={{ fontSize: 15, color: "black", fontWeight: "800" }}>Filter</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={Reset} style={{ width: windoWidth / 2.2, marginHorizontal: 4, backgroundColor: "lightgrey", borderRadius: 8, paddingVertical: 10, marginVertical: 20, justifyContent: "center", alignItems: "center" }}>
                         <Text style={{ fontSize: 15, color: "black", fontWeight: "800" }}>Reset</Text>
@@ -112,29 +146,33 @@ export default function () {
                 </View>
                 <ScrollView>
                     {
-                        SearchArray.map((item) => (
-                            <>
-                                <View style={styles.DateView}>
-                                    <Text>{item.Dates}</Text>
-                                </View>
-                                <View style={{ marginHorizontal: 10, marginVertical: 10, borderBottomColor: "grey" }}>
-                                    <View style={styles.DataPreview}>
-                                        <View style={[styles.DataText, { width: windoWidth / 9, justifyContent: "flex-start", paddingVertical: 5 }]}>
-                                            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/1250/1250694.png" }} style={styles.ImageIcon} />
+                        Loading ? <ActivityIndicator style={{ height: windoHeight / 2, justifyContent: "center", alignItems: "center" }} size={"large"} color="#EE7523" /> :
+                            DateWIseData.length === 0 ? <View style={{ height: windoHeight / 2, justifyContent: "center", alignItems: "center" }}><Text style={{ color: "black" }}>Please Select the Starting & End date</Text></View> :
+                                DateWIseData.map((item, index) => (
+                                    <>
+                                        <View style={styles.DateView} key={index}>
+                                            <Text style={styles.DateTextMain}>{item.start.split("T", 1)} </Text>
                                         </View>
-                                        <View style={[styles.DataText, { width: windoWidth / 1.6, alignItems: "flex-start" }]}>
-                                            <Text style={{ fontSize: 16, color: "black", fontWeight: "600" }}>{item.service}</Text>
-                                            <Text>{item.StoreName}- {item.Distance}</Text>
-                                            <Text style={{ marginBottom: 10 }}>Time - {item.Time}</Text>
-                                        </View>
-                                        <View style={[styles.DataText, { justifyContent: "flex-start" }]}>
-                                            <Text style={{ fontSize: 15, color: "black", fontWeight: "700" }}>STATUS</Text>
-                                        </View>
-                                    </View>
+                                        <View style={{ marginHorizontal: 10, marginVertical: 10, borderBottomColor: "grey" }}>
+                                            <View style={styles.DataPreview}>
+                                                <View style={[styles.DataText, { width: windoWidth / 9, justifyContent: "flex-start", paddingVertical: 5 }]}>
+                                                    <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/1250/1250694.png" }} style={styles.ImageIcon} />
+                                                </View>
+                                                <View style={[styles.DataText, { width: windoWidth / 1.6, alignItems: "flex-start" }]}>
+                                                    <Text style={{ fontSize: 16, color: "black", fontWeight: "600" }}>{item.service}</Text>
+                                                    <Text>{item.StoreName}- {item.Distance}</Text>
+                                                    <Text style={{ marginBottom: 10, color: "grey" }}>Time - {item.Time}</Text>
+                                                    <Text style={{ marginBottom: 10, color: "grey" }}>Service Surface - {item.serviceSurface}</Text>
+                                                    <Text style={{ marginBottom: 10, color: "grey" }}>Service Type - {item.serviceType}</Text>
+                                                </View>
+                                                <View style={[styles.DataText, { justifyContent: "flex-start" }]}>
+                                                    <Text style={{ fontSize: 15, color: "black", fontWeight: "700" }}>{item.serviceStatus}</Text>
+                                                </View>
+                                            </View>
 
-                                </View>
-                            </>
-                        ))
+                                        </View>
+                                    </>
+                                ))
                     }
                 </ScrollView>
 
@@ -194,5 +232,9 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         justifyContent: "center",
         alignItems: "center"
+    },
+    DateTextMain: {
+        fontSize: 15,
+        color: "black"
     }
 })

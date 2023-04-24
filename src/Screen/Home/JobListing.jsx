@@ -35,7 +35,7 @@ const JobListing = ({ navigation }) => {
             <ScrollView>
                 {
                     SearcheData.map((item, index) => (
-                        <ListJobHome item={item} key={index} onPress={() => navigation.navigate('JobMaindetail')} />
+                        <ListJobHome item={item} key={index} Carid={item.carId} onPress={() => navigation.navigate('JobMaindetail', { CarId: item.carId })} />
                     ))
                 }
             </ScrollView>

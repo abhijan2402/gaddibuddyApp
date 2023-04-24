@@ -1,12 +1,33 @@
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../Components/Header';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import { useNavigation, useRoute } from '@react-navigation/native';
+
 const JobMaindetail = ({ navigation }) => {
+    const route = useRoute();
+    const { CarId } = route.params;
+    const [Details, setDetails] = useState([])
+
+    useEffect(() => {
+        GetCarDetails();
+    }, [])
+    const GetCarDetails = async () => {
+        try {
+            const response = await fetch(`http://192.168.4.185:9000/api/cars/${CarId}`, {
+                method: "GET", // or 'PUT'
+            });
+            const result = await response.json();
+            let CarD = result.car;
+            setDetails(CarD)
+        } catch (error) {
+            console.log(error, 'jj')
+        }
+    }
     return (
         <View style={styles.Header}>
-            <Header title="MyJob" onPress={() => navigation.navigate('JobList')} />
+            <Header title="MyJob" onPress={() => navigation.navigate('Homes')} />
             <View>
                 <View style={styles.InfoView}>
                     <Text style={styles.InfoViewText}>Service : </Text>
@@ -14,11 +35,15 @@ const JobMaindetail = ({ navigation }) => {
                 </View>
                 <View style={styles.InfoView}>
                     <Text style={styles.InfoViewText}>Car No : </Text>
-                    <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>KA 51 Z 2072</Text>
+                    <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Details.carNo}</Text>
+                </View>
+                <View style={styles.InfoView}>
+                    <Text style={styles.InfoViewText}>Car Type : </Text>
+                    <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Details.carType}</Text>
                 </View>
                 <View style={styles.InfoView}>
                     <Text style={styles.InfoViewText}>Address : </Text>
-                    <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>Kormangala</Text>
+                    <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Details.houseName},{Details.streetName},{Details.pincode}</Text>
                 </View>
             </View>
             <View style={styles.IVView}>

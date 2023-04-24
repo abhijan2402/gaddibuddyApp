@@ -24,8 +24,8 @@ const SignIn = ({ navigation }) => {
 
     const Login = async () => {
         const data = {
-            // mobileNo: "8822881085",
-            // password: "dhullo_nabajit"
+            // mobileNo: "7976114618",
+            // password: "123456"
             mobileNo: MobNum,
             password: passwod
         }
@@ -37,7 +37,7 @@ const SignIn = ({ navigation }) => {
                 throw "please enter password"
 
             setloader(true)
-            const response = await fetch("http://192.168.0.185:9000/api/cleaners/login", {
+            const response = await fetch("http://192.168.4.185:9000/api/cleaners/login", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -55,30 +55,30 @@ const SignIn = ({ navigation }) => {
             console.log(userID, "i am valueooo");
 
 
-            const trap = result.cleaner.name
-            const JSONValue = JSON.stringify(trap)
+            // const trap = result.cleaner.name
+            // const JSONValue = JSON.stringify(trap)
             // console.log(JSONValue, "JSONValue");
 
 
-            console.log(result.cleaner, "name");
-            const pass = result.cleaner.password;
-            const JSONValue1 = JSON.stringify(pass)
+            // console.log(result.cleaner, "name");
+            // const pass = result.cleaner.password;
+            // const JSONValue1 = JSON.stringify(pass)
 
             // const MobNum = result.cleaner.MobNum
             // const JSONValue2 = JSON.stringify(MobNum)
 
-            const serviceStartDate = result.cleaner.serviceStartDate
-            const JSONValue3 = JSON.stringify(serviceStartDate)
+            // const serviceStartDate = result.cleaner.serviceStartDate
+            // const JSONValue3 = JSON.stringify(serviceStartDate)
 
-            const ID = result.cleaner._id
-            const JSONValue4 = JSON.stringify(ID)
+            // const ID = result.cleaner._id
+            // const JSONValue4 = JSON.stringify(ID)
 
 
-            await AsyncStorage.setItem('Userdetails', JSONValue)
-            await AsyncStorage.setItem('password', JSONValue1)
-            // await AsyncStorage.setItem('MobNum', JSONValue2)
-            await AsyncStorage.setItem('ID', JSONValue4)
-            await AsyncStorage.setItem('serviceStartDate', JSONValue3)
+            // await AsyncStorage.setItem('Userdetails', JSONValue)
+            // await AsyncStorage.setItem('password', JSONValue1)
+            // // await AsyncStorage.setItem('MobNum', JSONValue2)
+            // await AsyncStorage.setItem('ID', JSONValue4)
+            // await AsyncStorage.setItem('serviceStartDate', JSONValue3)
 
 
 

@@ -21,12 +21,13 @@ const Signup = ({ navigation }) => {
             mobileNo: phoneNumber,
             password: password
 
-            // mobileNo: MobNum,
-            // password: passwod
+            // mobileNo: "7976114619",
+            // password: "123456",
+            // name: "Yashraj"
         }
         try {
             setloader(true)
-            const response = await fetch("http://192.168.0.185:9000/api/cleaners/addCleaner", {
+            const response = await fetch("http://192.168.4.185:9000/api/cleaners/addCleaner", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -45,7 +46,7 @@ const Signup = ({ navigation }) => {
             setToastColorState("green")
             // setLoading(false)
             childRef.current.showToast();
-            navigation.navigate("HomeNav")
+            navigation.navigate("SignIn")
         } catch (error) {
             console.log("ppp");
             console.error("Error:", error);

@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, Pressable, Alert, Modal, Image } from 'react-native'
 import { Input } from '../../CommanStyles/InputSyles';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Modals } from '../../CommanStyles/ModalStyles';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserID, setUserDetails } from '../../redux/actions/userAction';
-
+import Toast from '../../Components/Toast';
 
 
 
@@ -20,12 +20,18 @@ const MainProfile = () => {
     const [updatedName, setupdatedName] = useState("")
     const [updatedPass, setupdatedPass] = useState("")
 
+    const childRef = useRef(null);
+    const [toastColorState, setToastColorState] = useState('rgba(41,250,25,1)');
+    const [toastTextColorState, setToastTextColorState] = useState('black');
+    const [toastMessage, setToastMessage] = useState('');
+
 
     const dispatch = useDispatch();
 
 
     useEffect(() => {
-
+        setupdatedName(userID.name)
+        setupdatedPass(userID.password)
         test();
         Dataset();
     }, [])
@@ -63,7 +69,7 @@ const MainProfile = () => {
 
         }
         try {
-            const response = await fetch(`http://192.168.0.185:9000/api/cleaners/${iD}`, {
+            const response = await fetch(`http://192.168.4.185:9000/api/cleaners/${iD}`, {
                 method: "PATCH", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -76,6 +82,14 @@ const MainProfile = () => {
             dispatch(setUserID(finalVal))
             console.log(userID, "i am valueooo");
 
+            // setloader(false)
+            setToastMessage("User details Updated");
+            setToastTextColorState("white")
+            setToastColorState("green")
+            // setLoading(false)
+            childRef.current.showToast();
+            setModalVisible(false)
+
         } catch (error) {
             console.log(error, 'jj')
 
@@ -83,6 +97,12 @@ const MainProfile = () => {
     }
     return (
         <>
+            <Toast
+                toastColor={toastColorState}
+                toastTextColor={toastTextColorState}
+                toastMessage={toastMessage}
+                ref={childRef}
+            />
             <View style={styles.MainView}>
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Profile</Text>
@@ -109,8 +129,8 @@ const MainProfile = () => {
                                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2976/2976286.png" }} style={Modals.CrossIcon} />
                                 </TouchableOpacity>
                             </View>
-                            <TextInput placeholder={userID.name} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedName(value) }} />
-                            <TextInput placeholder={userID.password} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedPass(value) }} />
+                            <TextInput value={updatedName} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedName(value) }} />
+                            <TextInput value={updatedPass} placeholderTextColor={"black"} style={Modals.Input} onChangeText={(value) => { setupdatedPass(value) }} />
                             <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={UpdateProfile}>
                                 <Text style={Input.SignUpButtonText}>Update Profile</Text>
                             </TouchableOpacity>

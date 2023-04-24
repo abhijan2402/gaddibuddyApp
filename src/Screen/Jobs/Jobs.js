@@ -18,7 +18,7 @@ const Jobs = () => {
     console.log("hii");
     console.log(userID, "i am usweer");
     try {
-      const response = await fetch(`http://192.168.0.185:9000/api/scheduledJobs/`, {
+      const response = await fetch(`http://192.168.4.185:9000/api/scheduledJobs/`, {
         method: "GET", // or 'PUT'
       });
       const result = await response.json();
