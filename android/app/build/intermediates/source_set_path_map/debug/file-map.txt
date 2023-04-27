@@ -31,7 +31,9 @@ com.awesomeproject.app-mergeDebugResources-29 C:\selfProjects\Assign_Intern\andr
 com.awesomeproject.app-merged_res-30 C:\selfProjects\Assign_Intern\android\app\build\intermediates\merged_res\debug
 com.awesomeproject.app-debug-31 C:\selfProjects\Assign_Intern\android\app\src\debug\res
 com.awesomeproject.app-main-32 C:\selfProjects\Assign_Intern\android\app\src\main\res
-com.awesomeproject.app-packaged_res-33 C:\selfProjects\Assign_Intern\node_modules\react-native-date-picker\android\build\intermediates\packaged_res\debug
-com.awesomeproject.app-packaged_res-34 C:\selfProjects\Assign_Intern\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
-com.awesomeproject.app-packaged_res-35 C:\selfProjects\Assign_Intern\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
-com.awesomeproject.app-packaged_res-36 C:\selfProjects\Assign_Intern\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug
+com.awesomeproject.app-packaged_res-33 C:\selfProjects\Assign_Intern\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug
+com.awesomeproject.app-packaged_res-34 C:\selfProjects\Assign_Intern\node_modules\react-native-date-picker\android\build\intermediates\packaged_res\debug
+com.awesomeproject.app-packaged_res-35 C:\selfProjects\Assign_Intern\node_modules\react-native-image-picker\android\build\intermediates\packaged_res\debug
+com.awesomeproject.app-packaged_res-36 C:\selfProjects\Assign_Intern\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
+com.awesomeproject.app-packaged_res-37 C:\selfProjects\Assign_Intern\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
+com.awesomeproject.app-packaged_res-38 C:\selfProjects\Assign_Intern\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug

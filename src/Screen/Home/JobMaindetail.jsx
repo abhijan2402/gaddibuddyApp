@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, PermissionsAndroid, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../Components/Header';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const JobMaindetail = ({ navigation }) => {
     const route = useRoute();
     const { CarId } = route.params;
     const [Details, setDetails] = useState([])
+    const [Image1, setImage1] = useState("")
 
     useEffect(() => {
         GetCarDetails();
@@ -24,6 +26,24 @@ const JobMaindetail = ({ navigation }) => {
         } catch (error) {
             console.log(error, 'jj')
         }
+    }
+    let options = {
+        saveToPhotos: true,
+        mediaType: 'photo'
+    }
+    const openCamera = async () => {
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            const result = await launchCamera(options)
+            console.log(result, " ia m result ");
+            setImage1(result.assets[0].uri)
+        }
+    }
+    const openGallery = async () => {
+        const result = await launchImageLibrary(options)
+        setImage1(result.assets[0].uri)
     }
     return (
         <View style={styles.Header}>
@@ -48,11 +68,25 @@ const JobMaindetail = ({ navigation }) => {
             </View>
             <View style={styles.IVView}>
                 <Text style={styles.IVText}>Add Image</Text>
-                <Text style={styles.IVText}>Add Video</Text>
+                {/* <Text style={styles.IVText}>Add Video</Text> */}
             </View>
             <View style={styles.IVView}>
-                <View style={styles.Box}></View>
-                <View style={styles.Box}></View>
+                <TouchableOpacity style={styles.Box} onPress={openCamera}>
+                    <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/685/685655.png" }} style={styles.CameraIcon} />
+                    <Text style={styles.OpenCam}>Open Camera</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.Box} onPress={openGallery}>
+                    <Image source={{ uri: "https://static.thenounproject.com/png/17840-200.png" }} style={styles.CameraIcon} />
+                    <Text style={styles.OpenCam}>Open Gallery</Text>
+                </TouchableOpacity>
+            </View>
+            <View>
+                {
+                    Image1 == "" ? <View style={{ display: "flex", justifyContent: "center", alignItems: "center", height: windoHeight / 4 }}>
+                        <Text style={{ fontSize: 18, color: "black", fontWeight: "600" }}>No Image is Selected</Text>
+                    </View> :
+                        <Image source={{ uri: Image1 }} style={styles.ImageSeleted} />
+                }
             </View>
         </View>
     )
@@ -104,11 +138,24 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     Box: {
-        // borderWidth: 1,
-        height: 100,
-        width: 100,
-        backgroundColor: "lightgrey",
         borderRadius: 6,
         paddingHorizontal: 10,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    ImageSeleted: {
+        marginHorizontal: 20,
+        height: windoHeight / 4,
+        marginVertical: 20,
+        borderRadius: 8
+    },
+    CameraIcon: {
+        width: windoWidth / 6.5,
+        height: windoHeight / 14
+    },
+    OpenCam: {
+        fontSize: 13,
+        color: 'black'
     }
 })
