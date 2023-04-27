@@ -6,11 +6,12 @@ const ListJobHome = ({ item, onPress, Carid }) => {
     const [Details, setDetails] = useState([])
 
     useEffect(() => {
+        console.log(Carid, "car id");
         GetCarDetails()
     }, [])
     const GetCarDetails = async () => {
         try {
-            const response = await fetch(`http://192.168.0.185:9000/api/cars/${Carid}`, {
+            const response = await fetch(`http://192.168.4.185:9000/api/cars/${Carid}`, {
                 method: "GET", // or 'PUT'
             });
             const result = await response.json();

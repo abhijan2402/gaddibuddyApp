@@ -14,6 +14,7 @@ const JobListing = ({ navigation }) => {
 
     useEffect(() => {
         FilterData()
+        console.log(JobsLists, "i am job list");
     }, [])
     const FilterData = () => {
         let searchItem = "pending"

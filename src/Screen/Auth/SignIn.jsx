@@ -47,6 +47,9 @@ const SignIn = ({ navigation }) => {
 
             const result = await response.json();
             console.log("Success:", result);
+            if (result.error) {
+                throw result.error
+            }
             const finalVal = result.cleaner
             // const naa = finalVal.name;
             // console.log(naa, "naa");
@@ -54,37 +57,6 @@ const SignIn = ({ navigation }) => {
             // dispatch(setUserDetails("hii"))
             console.log(userID, "i am valueooo");
 
-
-            // const trap = result.cleaner.name
-            // const JSONValue = JSON.stringify(trap)
-            // console.log(JSONValue, "JSONValue");
-
-
-            // console.log(result.cleaner, "name");
-            // const pass = result.cleaner.password;
-            // const JSONValue1 = JSON.stringify(pass)
-
-            // const MobNum = result.cleaner.MobNum
-            // const JSONValue2 = JSON.stringify(MobNum)
-
-            // const serviceStartDate = result.cleaner.serviceStartDate
-            // const JSONValue3 = JSON.stringify(serviceStartDate)
-
-            // const ID = result.cleaner._id
-            // const JSONValue4 = JSON.stringify(ID)
-
-
-            // await AsyncStorage.setItem('Userdetails', JSONValue)
-            // await AsyncStorage.setItem('password', JSONValue1)
-            // // await AsyncStorage.setItem('MobNum', JSONValue2)
-            // await AsyncStorage.setItem('ID', JSONValue4)
-            // await AsyncStorage.setItem('serviceStartDate', JSONValue3)
-
-
-
-
-            // const value = await AsyncStorage.getItem('Userdetails')
-            // console.log(value, "i am value")
             setloader(false)
             setToastMessage("User Logged In");
             setToastTextColorState("white")

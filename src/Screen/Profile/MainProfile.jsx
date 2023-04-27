@@ -109,7 +109,7 @@ const MainProfile = () => {
                 </View>
                 <View style={styles.ProfileView}>
                     <Text style={styles.ProfileText}>Name :{userID.name} </Text>
-                    <Text style={styles.ProfileText}>Email : abhishek.jangid643@gmail.com</Text>
+                    {/* <Text style={styles.ProfileText}>Email : abhishek.jangid643@gmail.com</Text> */}
                     <Text style={styles.ProfileText}>password :{userID.password}</Text>
                 </View>
                 <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={() => setModalVisible(true)}>
