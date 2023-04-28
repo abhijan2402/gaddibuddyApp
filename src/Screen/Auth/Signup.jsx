@@ -16,39 +16,46 @@ const Signup = ({ navigation }) => {
     const [toastMessage, setToastMessage] = useState('');
     const SignUp = async () => {
         console.log("hiii");
-        const data = {
-            name: name,
-            mobileNo: phoneNumber,
-            password: password
-
-            // mobileNo: "7976114619",
-            // password: "123456",
-            // name: "Yashraj"
-        }
         try {
+            // if (name == "" || mobileNo == "" || password === "") {
+            //     throw "Enter all the fields"
+
+            // }
+            // const data = {
+            //     name: name,
+            //     mobileNo: phoneNumber,
+            //     password: password
+
+
+            // }
             setloader(true)
             const response = await fetch("http://192.168.4.185:9000/api/cleaners/addCleaner", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    name: name,
+                    mobileNo: phoneNumber,
+                    password: password
+                }),
             });
             console.log("kkk");
             const result = await response.json();
             console.log("Success:", result);
-            // await AsyncStorage.setItem('Userdetails', JSON.stringify(result))
-            // const value = await AsyncStorage.getItem('Userdetails')
-            // console.log(value, "i am value")
             setloader(false)
-            setToastMessage("Cleaner Created");
+            if (result.error) {
+                throw result.error
+            }
+            setToastMessage("Cleaner Created,Please log in");
             setToastTextColorState("white")
             setToastColorState("green")
             // setLoading(false)
             childRef.current.showToast();
-            navigation.navigate("SignIn")
+            setTimeout(() => {
+                navigation.navigate("SignIn")
+            }, 2000);
         } catch (error) {
-            console.log("ppp");
             console.error("Error:", error);
             setToastMessage(error);
             setToastTextColorState("white")

@@ -160,8 +160,8 @@ export default function () {
                                                 </View>
                                                 <View style={[styles.DataText, { width: windoWidth / 1.6, alignItems: "flex-start" }]}>
                                                     <Text style={{ fontSize: 16, color: "black", fontWeight: "600" }}>{item.service}</Text>
-                                                    <Text>{item.StoreName}- {item.Distance}</Text>
-                                                    <Text style={{ marginBottom: 10, color: "grey" }}>Time - {item.Time}</Text>
+                                                    {/* <Text>{item.StoreName}- {item.Distance}</Text> */}
+                                                    <Text style={{ marginBottom: 10, color: "grey" }}>Starting Time - {item.start.slice(0, 10)}</Text>
                                                     <Text style={{ marginBottom: 10, color: "grey" }}>Service Surface - {item.serviceSurface}</Text>
                                                     <Text style={{ marginBottom: 10, color: "grey" }}>Service Type - {item.serviceType}</Text>
                                                 </View>

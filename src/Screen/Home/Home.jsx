@@ -1,13 +1,19 @@
 import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import JobAvailable from '../../Components/JobAvailable';
+import { useSelector } from 'react-redux';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 const Home = ({ navigation }) => {
+  const { userID, user } = useSelector(state => state.user);
   const [data, setdata] = useState([])
   const [SearcheData, setSearcheData] = useState([])
+  const [DailyJob, setDailyJob] = useState([])
+  const [MonthlyJob, setMonthlyJob] = useState([])
   useEffect(() => {
     ListJobs();
+    ListJobs();
+    console.log(userID, "uder");
   }, [])
 
   const ListJobs = async () => {
@@ -20,7 +26,10 @@ const Home = ({ navigation }) => {
       let Newd = result.scheduledJobs
       console.log(Newd, "j");
       setdata(Newd)
-      let searchItem = "644b6eb647e5692e48924cbb"
+
+
+
+      let searchItem = userID._id
       if (searchItem != "") {
         console.log("hhhh");
         const searcheShops = Newd.filter((filteredShops) => {
@@ -28,10 +37,32 @@ const Home = ({ navigation }) => {
         });
         setSearcheData(searcheShops)
         console.log(SearcheData, "jjjj");
-
-      } else {
-        console.log("noooooooooooooooo");
       }
+
+
+
+      let searchItem1 = "One Time"
+      if (searchItem1 != "") {
+        console.log("hhhh");
+        const searcheShops1 = SearcheData.filter((filteredShops) => {
+          return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem1.toLowerCase());
+        });
+        setDailyJob(searcheShops1)
+
+      }
+
+
+      let searchItem2 = "Daily"
+      if (searchItem2 != "") {
+        console.log("hhhh");
+        const searcheShops2 = SearcheData.filter((filteredShops) => {
+          return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem2.toLowerCase());
+        });
+        setMonthlyJob(searcheShops2)
+        console.log(MonthlyJob, "i am monthly");
+      }
+
+
     } catch (error) {
       console.log(error, 'jj')
     }
@@ -43,9 +74,9 @@ const Home = ({ navigation }) => {
         {/* <Text style={[styles.HomeText, { color: "#EE7523" }]}>Select all Jobs</Text> */}
       </View>
       <View>
-        <JobAvailable NOJ="50" Type="Monthly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData, Type: "Daily" })} />
-        <JobAvailable NOJ="28" Type="Weekly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData, Type: "One Time" })} />
-        <JobAvailable NOJ="78" Type="One Time" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData })} />
+        <JobAvailable NOJ={DailyJob.length} Type="One Time" onPress={() => navigation.navigate('JobList', { JobsLists: DailyJob, })} />
+        <JobAvailable NOJ={MonthlyJob.length} Type="Monthly" onPress={() => navigation.navigate('JobList', { JobsLists: MonthlyJob, })} />
+        <JobAvailable NOJ="78" Type="weekly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData })} />
       </View>
     </View>
   )

@@ -10,6 +10,7 @@ MERGED from [com.facebook.flipper:flipper-network-plugin:0.125.0] C:\Users\acer\
 MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.125.0] C:\Users\acer\.gradle\caches\transforms-3\d00cb5af49214c127447117a850c65b4\transformed\jetified-flipper-fresco-plugin-0.125.0\AndroidManifest.xml:8:1-15:12
 MERGED from [:react-native-async-storage_async-storage] C:\selfProjects\Assign_Intern\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-date-picker] C:\selfProjects\Assign_Intern\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-image-base64] C:\selfProjects\Assign_Intern\node_modules\react-native-image-base64\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-image-picker] C:\selfProjects\Assign_Intern\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-21:12
 MERGED from [:react-native-safe-area-context] C:\selfProjects\Assign_Intern\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] C:\selfProjects\Assign_Intern\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
@@ -205,6 +206,8 @@ MERGED from [:react-native-async-storage_async-storage] C:\selfProjects\Assign_I
 MERGED from [:react-native-async-storage_async-storage] C:\selfProjects\Assign_Intern\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-date-picker] C:\selfProjects\Assign_Intern\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-date-picker] C:\selfProjects\Assign_Intern\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-image-base64] C:\selfProjects\Assign_Intern\node_modules\react-native-image-base64\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-image-base64] C:\selfProjects\Assign_Intern\node_modules\react-native-image-base64\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-image-picker] C:\selfProjects\Assign_Intern\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-image-picker] C:\selfProjects\Assign_Intern\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] C:\selfProjects\Assign_Intern\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41

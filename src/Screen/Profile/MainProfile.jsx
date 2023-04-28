@@ -32,8 +32,8 @@ const MainProfile = () => {
     useEffect(() => {
         setupdatedName(userID.name)
         setupdatedPass(userID.password)
-        test();
-        Dataset();
+        // test();
+        // Dataset();
     }, [])
     const Dataset = () => {
         console.log(userID, "hhh");
@@ -65,9 +65,8 @@ const MainProfile = () => {
             status: userID.status,
             mobileNo: userID.mobileNo,
             serviceStartDate: userID.serviceStartDate
-
-
         }
+        console.log("Test");
         try {
             const response = await fetch(`http://192.168.4.185:9000/api/cleaners/${iD}`, {
                 method: "PATCH", // or 'PUT'

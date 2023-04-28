@@ -6,7 +6,7 @@ const ListJobHome = ({ item, onPress, Carid }) => {
     const [Details, setDetails] = useState([])
 
     useEffect(() => {
-        console.log(Carid, "car id");
+        console.log(item, "car id");
         GetCarDetails()
     }, [])
     const GetCarDetails = async () => {

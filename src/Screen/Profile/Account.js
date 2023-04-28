@@ -25,7 +25,7 @@ const Account = ({ navigation }) => {
   return (
     <View style={styles.MainView}>
       <View style={styles.Header}>
-        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2223/2223615.png" }} style={styles.Logo} />
+        {/* <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2223/2223615.png" }} style={styles.Logo} /> */}
         <Text style={styles.AccountText}>Account</Text>
       </View>
       <View style={{ backgroundColor: "#F7F7F7" }}>

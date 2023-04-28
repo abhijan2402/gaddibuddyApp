@@ -5,6 +5,7 @@ const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserID, setUserDetails } from '../../redux/actions/userAction';
+import JobSpecification from './JobSpecification';
 const Jobs = () => {
   const [data, setdata] = useState([])
   const [SearcheData, setSearcheData] = useState([])
@@ -51,20 +52,21 @@ const Jobs = () => {
         {
           SearcheData.length == 0 ? <ActivityIndicator color="#EE7523" size={"large"} style={{ height: windoHeight / 1.2 }} /> :
 
-            SearcheData.map((item, index) => (
-              <View style={styles.JobView} key={index}>
-                <View style={[styles.CarView, { width: windoWidth / 7.5 }]}>
-                  <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2736/2736918.png" }} style={styles.CarLogo} />
-                </View>
-                <View style={[styles.CarViewData]}>
-                  <Text style={[styles.DataInfo, { fontWeight: "600", color: "black", fontSize: 17 }]}>{item.serviceSurface}</Text>
-                  <Text style={styles.DataInfo}>ELITE i20 -KA MG 4602</Text>
-                  <Text style={styles.DataInfo}>Service Type - {item.serviceType}</Text>
-                </View>
-                <View style={[styles.CarView, { width: windoWidth / 4.5 }]}>
-                  <Text style={styles.timeText}>{item.serviceStatus}</Text>
-                </View>
-              </View>
+            SearcheData.map((item) => (
+              // <View style={styles.JobView} key={index}>
+              //   <View style={[styles.CarView, { width: windoWidth / 7.5 }]}>
+              //     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2736/2736918.png" }} style={styles.CarLogo} />
+              //   </View>
+              //   <View style={[styles.CarViewData]}>
+              //     <Text style={[styles.DataInfo, { fontWeight: "600", color: "black", fontSize: 17 }]}>{item.serviceSurface}</Text>
+              //     <Text style={styles.DataInfo}>ELITE i20 -KA MG 4602</Text>
+              //     <Text style={styles.DataInfo}>Service Type - {item.serviceType}</Text>
+              //   </View>
+              //   <View style={[styles.CarView, { width: windoWidth / 4.5 }]}>
+              //     <Text style={styles.timeText}>{item.serviceStatus}</Text>
+              //   </View>
+              // </View>
+              <JobSpecification item={item} CarId={item.carId} />
 
             ))
         }
