@@ -1,7 +1,7 @@
 import { authtypes } from "../constants/userConstant";
 const initialState = {
     userID: {},
-    userDetails: {}
+    userDetails: false
 }
 const userReducer = (state = initialState, actions) => {
     switch (actions.type) {

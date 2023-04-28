@@ -18,8 +18,9 @@ const Home = ({ navigation }) => {
       });
       const result = await response.json();
       let Newd = result.scheduledJobs
+      console.log(Newd, "j");
       setdata(Newd)
-      let searchItem = "643f9f459b24e10a88ab6601"
+      let searchItem = "644b6eb647e5692e48924cbb"
       if (searchItem != "") {
         console.log("hhhh");
         const searcheShops = Newd.filter((filteredShops) => {
@@ -42,9 +43,9 @@ const Home = ({ navigation }) => {
         {/* <Text style={[styles.HomeText, { color: "#EE7523" }]}>Select all Jobs</Text> */}
       </View>
       <View>
-        <JobAvailable NOJ="50" Type="Monthly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData })} />
-        <JobAvailable NOJ="28" Type="Weekly" onPress={() => navigation.navigate('JobDetail')} />
-        <JobAvailable NOJ="78" Type="One Time" onPress={() => navigation.navigate('JobDetail')} />
+        <JobAvailable NOJ="50" Type="Monthly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData, Type: "Daily" })} />
+        <JobAvailable NOJ="28" Type="Weekly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData, Type: "One Time" })} />
+        <JobAvailable NOJ="78" Type="One Time" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData })} />
       </View>
     </View>
   )

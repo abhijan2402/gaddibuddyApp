@@ -25,7 +25,7 @@ const ListJobHome = ({ item, onPress, Carid }) => {
     return (
         <TouchableOpacity style={styles.MainView}>
             <Text style={styles.MainViewText}>Status -{item.serviceStatus}</Text>
-            {/* <Text style={styles.MainViewText}>Name</Text> */}
+            <Text style={styles.MainViewText}>service {item.service}</Text>
             <Text style={styles.MainViewText}>Model-{Details.carNo}</Text>
             <Text style={styles.MainViewText}>Address {Details.houseName} ,{Details.streetName} ,{Details.pincode}</Text>
             <Text style={styles.MainViewText}>Service Type - {item.serviceType}</Text>

@@ -53,7 +53,9 @@ const SignIn = ({ navigation }) => {
             const finalVal = result.cleaner
             // const naa = finalVal.name;
             // console.log(naa, "naa");
+
             dispatch(setUserID(finalVal))
+            dispatch(setUserDetails(true))
             // dispatch(setUserDetails("hii"))
             console.log(userID, "i am valueooo");
 
@@ -63,7 +65,7 @@ const SignIn = ({ navigation }) => {
             setToastColorState("green")
             // setLoading(false)
             childRef.current.showToast();
-            navigation.navigate("HomeNav")
+            // navigation.navigate("HomeNav")
         } catch (error) {
             console.error("Error:", error);
             setToastMessage(error);

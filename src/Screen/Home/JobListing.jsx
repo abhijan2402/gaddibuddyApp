@@ -9,7 +9,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 const JobListing = ({ navigation }) => {
     const route = useRoute();
-    const { JobsLists } = route.params;
+    const { JobsLists, Type } = route.params;
     const [SearcheData, setSearcheData] = useState([])
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const JobListing = ({ navigation }) => {
         console.log(JobsLists, "i am job list");
     }, [])
     const FilterData = () => {
-        let searchItem = "pending"
+        let searchItem = Type
 
         if (searchItem != "") {
             console.log("hhhh");
@@ -33,7 +33,7 @@ const JobListing = ({ navigation }) => {
     return (
         <View style={styles.Header}>
             <Header title="My Job Listing" onPress={() => navigation.navigate('Homes')} />
-            <ScrollView>
+            <ScrollView style={{ marginBottom: "30%" }}>
                 {
                     SearcheData.map((item, index) => (
                         <ListJobHome item={item} key={index} Carid={item.carId} onPress={() => navigation.navigate('JobMaindetail', { CarId: item.carId })} />
