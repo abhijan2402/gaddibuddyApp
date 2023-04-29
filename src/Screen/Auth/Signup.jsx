@@ -29,7 +29,7 @@ const Signup = ({ navigation }) => {
 
             // }
             setloader(true)
-            const response = await fetch("http://192.168.4.185:9000/api/cleaners/addCleaner", {
+            const response = await fetch("http://192.168.152.185:9000/api/cleaners/addCleaner", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",

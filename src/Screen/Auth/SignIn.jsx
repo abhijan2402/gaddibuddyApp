@@ -37,7 +37,7 @@ const SignIn = ({ navigation }) => {
                 throw "please enter password"
 
             setloader(true)
-            const response = await fetch("http://192.168.4.185:9000/api/cleaners/login", {
+            const response = await fetch("http://192.168.152.185:9000/api/cleaners/login", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",

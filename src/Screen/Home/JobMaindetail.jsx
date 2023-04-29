@@ -68,7 +68,7 @@ const JobMaindetail = ({ navigation }) => {
     }
     const UploadImage = async () => {
         try {
-            const response = await fetch("http://192.168.4.185:9000//api/imageUpload/644b6582b61f6c9c545b5f40", {
+            const response = await fetch("http://192.168.152.185:9000//api/imageUpload/644b6582b61f6c9c545b5f40", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -87,11 +87,10 @@ const JobMaindetail = ({ navigation }) => {
     const UpdateStatus = async () => {
         console.log("hi")
         try {
-            const response = await fetch('http://192.168.4.185:9000/api/scheduledJobs/644b6582b61f6c9c545b5f40', {
+            const response = await fetch('http://192.168.152.185:9000/api/scheduledJobs/644b6582b61f6c9c545b5f40', {
                 method: "PATCH", // or 'PUT'
                 body: JSON.stringify({
-                    serviceStatus: "Completed",
-                    message: ""
+                    serviceStatus: "Complete"
                 })
             });
 

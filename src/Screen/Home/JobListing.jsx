@@ -33,7 +33,7 @@ const JobListing = ({ navigation }) => {
     return (
         <View style={styles.Header}>
             <Header title="My Job Listing" onPress={() => navigation.navigate('Homes')} />
-            <ScrollView style={{ marginBottom: "30%" }}>
+            <ScrollView style={{ marginBottom: "17%" }}>
                 {
                     JobsLists.map((item, index) => (
                         <ListJobHome item={item} key={index} Carid={item.carId} onPress={() => navigation.navigate('JobMaindetail', { CarId: item.carId, serviceType: item.service })} />

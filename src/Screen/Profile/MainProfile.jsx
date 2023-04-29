@@ -32,30 +32,8 @@ const MainProfile = () => {
     useEffect(() => {
         setupdatedName(userID.name)
         setupdatedPass(userID.password)
-        // test();
-        // Dataset();
     }, [])
-    const Dataset = () => {
-        console.log(userID, "hhh");
-    }
 
-    const test = async () => {
-        const value = await AsyncStorage.getItem('Userdetails')
-        let user = value;
-        setname(JSON.parse(user))
-
-
-        const value1 = await AsyncStorage.getItem('password')
-        let user1 = value1;
-        setpassword(JSON.parse(user1))
-
-
-        const value2 = await AsyncStorage.getItem('ID')
-        let user2 = value2;
-        console.log(user2, "user2");
-        setID(JSON.parse(user2))
-        // setpassword(JSON.parse(user2))
-    }
 
     const UpdateProfile = async () => {
         console.log("Test");
@@ -68,12 +46,18 @@ const MainProfile = () => {
         }
         console.log("Test");
         try {
-            const response = await fetch(`http://192.168.4.185:9000/api/cleaners/${iD}`, {
+            const response = await fetch(`http://192.168.152.185:9000/api/cleaners/${iD}`, {
                 method: "PATCH", // or 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
+                // headers: {
+                //     "Content-Type": "application/json",
+                // },
+                body: JSON.stringify({
+                    name: updatedName,
+                    password: updatedPass,
+                    status: userID.status,
+                    mobileNo: userID.mobileNo,
+                    serviceStartDate: userID.serviceStartDate
+                }),
             });
             const result = await response.json();
             console.log("Success!!!!!:", result);
@@ -91,6 +75,11 @@ const MainProfile = () => {
 
         } catch (error) {
             console.log(error, 'jj')
+            setToastMessage("Error in updating profile");
+            setToastTextColorState("white")
+            setToastColorState("red")
+            // setLoading(false)
+            childRef.current.showToast();
 
         }
     }
@@ -109,7 +98,7 @@ const MainProfile = () => {
                 <View style={styles.ProfileView}>
                     <Text style={styles.ProfileText}>Name :{userID.name} </Text>
                     {/* <Text style={styles.ProfileText}>Email : abhishek.jangid643@gmail.com</Text> */}
-                    <Text style={styles.ProfileText}>password :{userID.password}</Text>
+                    <Text style={styles.ProfileText}>Password :{userID.password}</Text>
                 </View>
                 <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={() => setModalVisible(true)}>
                     <Text style={Input.SignUpButtonText}>Edit Profile</Text>
