@@ -13,30 +13,30 @@ const JobListing = ({ navigation }) => {
     const [SearcheData, setSearcheData] = useState([])
 
     useEffect(() => {
-        // FilterData()
+        FilterData()
         console.log(JobsLists, "i am job list");
     }, [])
-    // const FilterData = () => {
-    //     let searchItem = Type
+    const FilterData = () => {
+        let searchItem = Type
 
-    //     if (searchItem != "") {
-    //         console.log("hhhh");
-    //         const searcheShops = JobsLists.filter((filteredShops) => {
-    //             return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem.toLowerCase());
-    //         });
-    //         setSearcheData(searcheShops)
-    //     } else {
-    //         console.log("noooooooooooooooo");
-    //     }
-    // }
+        if (searchItem != "") {
+            console.log("hhhh");
+            const searcheShops = JobsLists.filter((filteredShops) => {
+                return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem.toLowerCase());
+            });
+            setSearcheData(searcheShops)
+        } else {
+            console.log("noooooooooooooooo");
+        }
+    }
 
     return (
         <View style={styles.Header}>
             <Header title="My Job Listing" onPress={() => navigation.navigate('Homes')} />
             <ScrollView style={{ marginBottom: "17%" }}>
                 {
-                    JobsLists.map((item, index) => (
-                        <ListJobHome item={item} key={index} Carid={item.carId} onPress={() => navigation.navigate('JobMaindetail', { CarId: item.carId, serviceType: item.service })} />
+                    SearcheData.map((item, index) => (
+                        <ListJobHome item={item} key={index} Carid={item.carId} onPress={() => navigation.navigate('JobMaindetail', { CarId: item.carId, serviceType: item.service, ScheduledId: item._id })} />
                     ))
                 }
             </ScrollView>

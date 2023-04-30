@@ -30,6 +30,7 @@ const MainProfile = () => {
 
 
     useEffect(() => {
+        console.log(userID, "I am userID");
         setupdatedName(userID.name)
         setupdatedPass(userID.password)
     }, [])
@@ -38,26 +39,23 @@ const MainProfile = () => {
     const UpdateProfile = async () => {
         console.log("Test");
         const data = {
-            name: updatedName,
-            password: updatedPass,
-            status: userID.status,
-            mobileNo: userID.mobileNo,
-            serviceStartDate: userID.serviceStartDate
+            name: "Abhishek Jan",
+            password: "123456",
+            status: "Active",
+            mobileNo: "7976114618",
+            serviceStartDate: "2023-04-28T06:57:54.020Z"
         }
         console.log("Test");
+        console.log(JSON.stringify(data));
         try {
             const response = await fetch(`http://192.168.152.185:9000/api/cleaners/${iD}`, {
-                method: "PATCH", // or 'PUT'
-                // headers: {
-                //     "Content-Type": "application/json",
-                // },
-                body: JSON.stringify({
-                    name: updatedName,
-                    password: updatedPass,
-                    status: userID.status,
-                    mobileNo: userID.mobileNo,
-                    serviceStartDate: userID.serviceStartDate
-                }),
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.parse(JSON.stringify(data))
             });
             const result = await response.json();
             console.log("Success!!!!!:", result);
@@ -99,10 +97,12 @@ const MainProfile = () => {
                     <Text style={styles.ProfileText}>Name :{userID.name} </Text>
                     {/* <Text style={styles.ProfileText}>Email : abhishek.jangid643@gmail.com</Text> */}
                     <Text style={styles.ProfileText}>Password :{userID.password}</Text>
+                    <Text style={styles.ProfileText}>Mobile Number :{userID.mobileNo}</Text>
+
                 </View>
-                <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={() => setModalVisible(true)}>
+                {/* <TouchableOpacity style={[Input.SignUpButton, { marginHorizontal: 30 }]} onPress={() => setModalVisible(true)}>
                     <Text style={Input.SignUpButtonText}>Edit Profile</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
             <View style={Modals.centeredView}>
                 <Modal

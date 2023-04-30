@@ -66,6 +66,15 @@ const Home = ({ navigation }) => {
       console.log(error, 'jj')
     }
   }
+  function findLength(searchItem2) {
+    if (searchItem2 != "") {
+      const searcheShops2 = SearcheData.filter((filteredShops) => {
+        return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem2.toLowerCase());
+      });
+      return searcheShops2.length
+    }
+  }
+
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
     await ListJobs();
@@ -83,8 +92,8 @@ const Home = ({ navigation }) => {
         {/* <Text style={[styles.HomeText, { color: "#EE7523" }]}>Select all Jobs</Text> */}
       </View>
       <View>
-        <JobAvailable NOJ={DailyJob.length} Type="One Time" onPress={() => navigation.navigate('JobList', { JobsLists: DailyJob, })} />
-        <JobAvailable NOJ={MonthlyJob.length} Type="Monthly" onPress={() => navigation.navigate('JobList', { JobsLists: MonthlyJob, })} />
+        <JobAvailable NOJ={findLength("One Time")} Type="One Time" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData, Type: "One Time" })} />
+        <JobAvailable NOJ={findLength("Daily")} Type="Monthly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData, Type: "Daily" })} />
         <JobAvailable NOJ="78" Type="weekly" onPress={() => navigation.navigate('JobList', { JobsLists: SearcheData })} />
       </View>
     </ScrollView>

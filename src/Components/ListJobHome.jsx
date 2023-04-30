@@ -11,7 +11,7 @@ const ListJobHome = ({ item, onPress, Carid }) => {
     }, [])
     const GetCarDetails = async () => {
         try {
-            const response = await fetch(`http://192.168.4.185:9000/api/cars/${Carid}`, {
+            const response = await fetch(`http://192.168.152.185:9000/api/cars/${Carid}`, {
                 method: "GET", // or 'PUT'
             });
             const result = await response.json();

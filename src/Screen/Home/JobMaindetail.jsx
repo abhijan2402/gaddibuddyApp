@@ -7,9 +7,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import ImgToBase64 from 'react-native-image-base64';
 import Toast from '../../Components/Toast';
+import { ActivityIndicator } from 'react-native-paper';
 const JobMaindetail = ({ navigation }) => {
     const route = useRoute();
-    const { CarId, serviceType } = route.params;
+    const { CarId, serviceType, ScheduledId } = route.params;
     const [Details, setDetails] = useState([])
     const [Image1, setImage1] = useState("")
     const [Image64test, setImage64test] = useState("")
@@ -19,13 +20,14 @@ const JobMaindetail = ({ navigation }) => {
     const [toastColorState, setToastColorState] = useState('rgba(41,250,25,1)');
     const [toastTextColorState, setToastTextColorState] = useState('black');
     const [toastMessage, setToastMessage] = useState('');
+    const [loader, setloader] = useState(false)
 
     useEffect(() => {
         GetCarDetails();
     }, [])
     const GetCarDetails = async () => {
         try {
-            const response = await fetch(`http://192.168.4.185:9000/api/cars/${CarId}`, {
+            const response = await fetch(`http://192.168.152.185:9000/api/cars/${CarId}`, {
                 method: "GET", // or 'PUT'
             });
             const result = await response.json();
@@ -54,6 +56,8 @@ const JobMaindetail = ({ navigation }) => {
         setImage1(result.assets[0].uri)
     }
     const Image64 = async () => {
+
+        setloader(true)
         console.log("hi");
         ImgToBase64.getBase64String(`${Image1}`)
             .then((base64String) => {
@@ -68,7 +72,7 @@ const JobMaindetail = ({ navigation }) => {
     }
     const UploadImage = async () => {
         try {
-            const response = await fetch("http://192.168.152.185:9000//api/imageUpload/644b6582b61f6c9c545b5f40", {
+            const response = await fetch(`http://192.168.152.185:9000//api/imageUpload/${ScheduledId}`, {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -85,19 +89,36 @@ const JobMaindetail = ({ navigation }) => {
         }
     }
     const UpdateStatus = async () => {
-        console.log("hi")
+
+
         try {
-            const response = await fetch('http://192.168.152.185:9000/api/scheduledJobs/644b6582b61f6c9c545b5f40', {
+            const data = "Complete"
+            const response = await fetch(`http://192.168.152.185:9000/api/scheduledJobs/${ScheduledId}`, {
                 method: "PATCH", // or 'PUT'
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify({
                     serviceStatus: "Complete"
                 })
             });
 
             const result = await response.json();
-            console.log(result, "i am resu;lt");
+            console.log(result, "i am result");
+            setloader(false)
+            setToastMessage("Status Updated");
+            setToastTextColorState("white")
+            setToastColorState("green")
+            childRef.current.showToast();
+            setImage1("")
         } catch (error) {
             console.log(error, "dmekrnfrfm");
+            setloader(false)
+            setToastMessage("SOme issue in Updating the status");
+            setToastTextColorState("white")
+            setToastColorState("red")
+            childRef.current.showToast();
+
 
         }
     }
@@ -152,7 +173,11 @@ const JobMaindetail = ({ navigation }) => {
                     }
                 </View>
                 <TouchableOpacity style={{ marginHorizontal: 20, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center" }} onPress={Image64}>
-                    <Text style={{ color: "white", fontWeight: "600" }}>Update Job</Text>
+                    {
+                        loader ? <ActivityIndicator size={22} color="white" /> :
+                            <Text style={{ color: "white", fontWeight: "600" }}>Update Job</Text>
+                    }
+
                 </TouchableOpacity>
             </View>
         </>
