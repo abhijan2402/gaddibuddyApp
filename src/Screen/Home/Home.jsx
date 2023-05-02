@@ -4,6 +4,7 @@ import JobAvailable from '../../Components/JobAvailable';
 import { useSelector } from 'react-redux';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = ({ navigation }) => {
   const { userID, user } = useSelector(state => state.user);
   const [data, setdata] = useState([])
@@ -14,8 +15,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     ListJobs();
-    ListJobs();
-    console.log(userID, "uder");
+    UpdateStatus()
   }, [])
 
   const ListJobs = async () => {
@@ -72,6 +72,29 @@ const Home = ({ navigation }) => {
         return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem2.toLowerCase());
       });
       return searcheShops2.length
+    }
+  }
+  const UpdateStatus = async () => {
+    const value = await AsyncStorage.getItem('ScheduledId')
+    console.log(value);
+    const ScheduledId = JSON.parse(value)
+    if (value !== null) {
+      try {
+        const data = "Complete"
+        const response = await fetch(`http://192.168.152.185:9000/api/scheduledJobs/${ScheduledId}`, {
+          method: "PATCH", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            serviceStatus: "Complete"
+          })
+        });
+        const result = await response.json();
+        console.log(result, "i am result");
+      } catch (error) {
+        console.log(error, "dmekrnfrfm");
+      }
     }
   }
 

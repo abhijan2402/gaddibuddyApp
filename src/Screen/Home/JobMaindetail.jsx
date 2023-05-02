@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View, Dimensions, PermissionsAndroid, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Header from '../../Components/Header';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
@@ -62,7 +64,7 @@ const JobMaindetail = ({ navigation }) => {
         ImgToBase64.getBase64String(`${Image1}`)
             .then((base64String) => {
                 // doSomethingWith(base64String);
-                console.log(base64String, "hhh");
+                // console.log(base64String, "hhh");
                 setImage64test(base64String)
                 UploadImage()
             })
@@ -72,6 +74,7 @@ const JobMaindetail = ({ navigation }) => {
     }
     const UploadImage = async () => {
         try {
+
             const response = await fetch(`http://192.168.152.185:9000//api/imageUpload/${ScheduledId}`, {
                 method: "POST", // or 'PUT'
                 headers: {
@@ -92,6 +95,9 @@ const JobMaindetail = ({ navigation }) => {
 
 
         try {
+            const keyVal = JSON.stringify(ScheduledId);
+            console.log(keyVal, "i am key val");
+            await AsyncStorage.setItem('ScheduledId', keyVal)
             const data = "Complete"
             const response = await fetch(`http://192.168.152.185:9000/api/scheduledJobs/${ScheduledId}`, {
                 method: "PATCH", // or 'PUT'
