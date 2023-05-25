@@ -11,7 +11,7 @@ const JobSpecification = ({ item, CarId }) => {
 
     const GetCarDetails = async () => {
         try {
-            const response = await fetch(`http://192.168.4.185:9000/api/cars/${CarId}`, {
+            const response = await fetch(`https://gaadibuddy.com/api/cars/${CarId}`, {
                 method: "GET", // or 'PUT'
             });
             const result = await response.json();

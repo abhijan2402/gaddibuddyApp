@@ -28,14 +28,14 @@ const HomeNavigation = () => {
           </View>
         )
       }} />
-      <Tab.Screen name="Jobs" component={Jobs} options={{
+      {/* <Tab.Screen name="Jobs" component={Jobs} options={{
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name='cart-outline' color={focused ? '#F05656' : '#808080'} size={22} />
             <Text style={{ color: focused ? '#F05656' : '#808080', fontFamily: "SourceSansPro-Regular" }}>Jobs</Text>
           </View>
         )
-      }} />
+      }} /> */}
 
       <Tab.Screen name='Prof' component={ProfileNavigation} options={{
         tabBarIcon: ({ focused }) => (

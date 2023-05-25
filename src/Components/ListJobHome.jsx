@@ -2,37 +2,48 @@ import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-nati
 import React, { useEffect, useState } from 'react'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-const ListJobHome = ({ item, onPress, Carid }) => {
+const ListJobHome = ({ item, onPress }) => {
     const [Details, setDetails] = useState([])
 
     useEffect(() => {
         console.log(item, "car id");
-        GetCarDetails()
+        // GetCarDetails()
     }, [])
     const GetCarDetails = async () => {
         try {
-            const response = await fetch(`http://192.168.152.185:9000/api/cars/${Carid}`, {
+            const response = await fetch(`https://gaadibuddy.com/api/cars/${Carid}`, {
                 method: "GET", // or 'PUT'
             });
             const result = await response.json();
             let CarD = result.car;
             setDetails(CarD)
+            console.log(Details, " I am detaimling oage");
         } catch (error) {
             console.log(error, 'jj')
         }
     }
 
     return (
-        <TouchableOpacity style={styles.MainView}>
-            <Text style={styles.MainViewText}>Status -{item.serviceStatus}</Text>
+        <View style={styles.MainView}>
             <Text style={styles.MainViewText}>service {item.service}</Text>
-            <Text style={styles.MainViewText}>Model-{Details.carNo}</Text>
-            <Text style={styles.MainViewText}>Address {Details.houseName} ,{Details.streetName} ,{Details.pincode}</Text>
+            {/* <Text style={styles.MainViewText}>Model-{CarNo}</Text> */}
+            {/* <Text style={styles.MainViewText}>Address {Carid.houseName} ,{Carid.streetName} ,{Carid.pincode}</Text> */}
             <Text style={styles.MainViewText}>Service Type - {item.serviceType}</Text>
+            <Text>{item.start}</Text>
+            <View style={[styles.MainViewText, { display: "flex", flexDirection: "row" }]}>
+                <Text style={styles.MainViewText}>Status - </Text>
+                {
+                    item.serviceStatus == "Complete" ?
+                        <Text style={[styles.MainViewText, { color: "green", fontWeight: "800", fontSize: 17 }]}>{item.serviceStatus}</Text> :
+                        <Text style={[styles.MainViewText]}>{item.serviceStatus}</Text>
+
+                }
+            </View>
+
             <TouchableOpacity style={styles.CarView} onPress={onPress}>
                 <Text style={styles.CarText}>See Car details</Text>
             </TouchableOpacity>
-        </TouchableOpacity>
+        </View>
     )
 }
 

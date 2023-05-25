@@ -1,8 +1,28 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, ScrollView, View, Dimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import ListJobHome from './ListJobHome';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-const JobAvailable = ({ NOJ, Type, onPress }) => {
+const JobAvailable = ({ NOJ, Type, JobsLists, onPress }, { navigation }) => {
+    const [SearcheData, setSearcheData] = useState([])
+
+    useEffect(() => {
+        FilterData()
+        // console.log(JobsLists, "i am job list");
+    }, [])
+    const FilterData = () => {
+        let searchItem = Type
+
+        if (searchItem != "") {
+            // console.log("hhhh");
+            const searcheShops = JobsLists.filter((filteredShops) => {
+                return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem.toLowerCase());
+            });
+            setSearcheData(searcheShops)
+        } else {
+            console.log("noooooooooooooooo");
+        }
+    }
     return (
         <View style={styles.MainView}>
             <View style={styles.Header}>

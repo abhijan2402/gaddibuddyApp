@@ -24,14 +24,6 @@ export default function () {
         setID(userID._id)
     }, [])
 
-    function FIlterDate(dates) {
-        const firDate = JSON.stringify(dates)
-        let dateArray1 = firDate.split("-");
-        let dateString1 = `${dateArray1[2]}`;
-        const DateStr1 = dateString1.split("T");
-
-        return DateStr1[0]
-    }
     const CheckFilter = async () => {
         console.log(date, "I amdate");
         setLoading(true)
@@ -40,7 +32,7 @@ export default function () {
             end: date1
         }
         try {
-            const response = await fetch(`http://192.168.4.185:9000/api/scheduledJobs/ByDate/cleaner/${iD}`, {
+            const response = await fetch(`https://gaadibuddy.com/api/scheduledJobs/ByDate/cleaner/${iD}`, {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -58,32 +50,9 @@ export default function () {
             setLoading(false)
 
         }
-        // let ResultantArray = []
-        // const thee = FIlterDate(date)
-        // console.log(thee, "i m thee")
-        // // console.log(orderdate1);
-        // const thee1 = FIlterDate(date1)
-        // console.log(thee1, "i m thee1")
-        // let i = 0;
-        // for (i = 0; i < FakeData.length; i++) {
-        //     const firDate3 = JSON.stringify(FakeData[i].Date)
-        //     let dateArray3 = firDate3.split("-");
-        //     let dateString3 = `${dateArray3[2]}`;
-        //     const DateStr3 = dateString3.split("T");
-        //     if (DateStr3[0] < thee || DateStr3[0] > thee1) {
-        //         console.log(DateStr3[0], "not valid")
-        //     }
-        //     else {
-        //         console.log(DateStr3[0], "valid")
-        //         ResultantArray.push(FakeData[i])
-        //         // console.log(ResultantArray, "i am array")
-        //         setSearchArray(ResultantArray)
-        //         // console.log("valid");
-        //     }
-        // }
+
     }
     const Reset = () => {
-        // setSearchArray(FakeData)
         setDateWIseData([])
     }
     return (

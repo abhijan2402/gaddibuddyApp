@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, Dimensions, PermissionsAndroid, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, PermissionsAndroid, TouchableOpacity, Image, ScrollView } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import Header from '../../Components/Header';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
@@ -10,12 +9,14 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import ImgToBase64 from 'react-native-image-base64';
 import Toast from '../../Components/Toast';
 import { ActivityIndicator } from 'react-native-paper';
-const JobMaindetail = ({ navigation }) => {
+const JobMaindetail = ({ navigation, }) => {
     const route = useRoute();
-    const { CarId, serviceType, ScheduledId } = route.params;
+    const { CarType, serviceType, ScheduledId, Address, SecondAddress } = route.params;
     const [Details, setDetails] = useState([])
     const [Image1, setImage1] = useState("")
     const [Image64test, setImage64test] = useState("")
+    const [base64toImg, setbase64toImg] = useState("")
+    const [ImageTypoe, setImageTypoe] = useState("")
 
 
     const childRef = useRef(null);
@@ -25,20 +26,9 @@ const JobMaindetail = ({ navigation }) => {
     const [loader, setloader] = useState(false)
 
     useEffect(() => {
-        GetCarDetails();
+        console.log(ScheduledId, "secheduled id");
+        GetImage()
     }, [])
-    const GetCarDetails = async () => {
-        try {
-            const response = await fetch(`http://192.168.152.185:9000/api/cars/${CarId}`, {
-                method: "GET", // or 'PUT'
-            });
-            const result = await response.json();
-            let CarD = result.car;
-            setDetails(CarD)
-        } catch (error) {
-            console.log(error, 'jj')
-        }
-    }
     let options = {
         saveToPhotos: true,
         mediaType: 'photo'
@@ -49,57 +39,74 @@ const JobMaindetail = ({ navigation }) => {
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             const result = await launchCamera(options)
-            console.log(result, " ia m result ");
-            setImage1(result.assets[0].uri)
+            const ImageRes = result.assets[0].uri;
+            setImage1(ImageRes)
+            let Types = result.assets[0].type
+            setImageTypoe(Types)
         }
     }
     const openGallery = async () => {
         const result = await launchImageLibrary(options)
-        setImage1(result.assets[0].uri)
+        const ImageRes = result.assets[0].uri;
+        setImage1(ImageRes)
+        let Types = result.assets[0].type
+        setImageTypoe(Types)
     }
     const Image64 = async () => {
-
         setloader(true)
-        console.log("hi");
         ImgToBase64.getBase64String(`${Image1}`)
             .then((base64String) => {
-                // doSomethingWith(base64String);
-                // console.log(base64String, "hhh");
-                setImage64test(base64String)
-                UploadImage()
+                ;
+                let UVC = `data:${ImageTypoe};base64,` + base64String;
+                console.log(UVC);
+                console.log(Image64test, 'j');
+                try {
+
+                    const response = fetch(`https://gaadibuddy.com/api/imageUpload/${ScheduledId}`, {
+                        method: "POST", // or 'PUT'
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        },
+                        body: JSON.stringify({
+                            "imgSource": UVC
+                        })
+                    });
+                    console.log(response, "imager uploaded");
+                    UpdateStatus()
+                } catch (error) {
+                    console.log(error, "error");
+                }
             })
             .catch((err) => {
                 console.log(err);
             });
     }
-    const UploadImage = async () => {
-        try {
 
-            const response = await fetch(`http://192.168.152.185:9000//api/imageUpload/${ScheduledId}`, {
-                method: "POST", // or 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "imgSource": Image64test
-                }),
+    const GetImage = async () => {
+        try {
+            const response = await fetch(`https://gaadibuddy.com/api/imageUpload/${ScheduledId}`, {
+                method: "GET", // or 'PUT'
             });
-            console.log(response, "imager uploaded");
-            UpdateStatus()
+            const result = await response.json();
+            console.log(result.imgSource, "imager uploaded");
+            const finalImage = result.imgSource
+            console.log(finalImage);
+            setbase64toImg(result.imgSource);
+            console.log(base64toImg, "i am thre final image");
+
 
         } catch (error) {
             console.log(error, "error");
         }
     }
     const UpdateStatus = async () => {
-
-
         try {
             const keyVal = JSON.stringify(ScheduledId);
             console.log(keyVal, "i am key val");
             await AsyncStorage.setItem('ScheduledId', keyVal)
             const data = "Complete"
-            const response = await fetch(`http://192.168.152.185:9000/api/scheduledJobs/${ScheduledId}`, {
+            const response = await fetch(`https://gaadibuddy.com/api/scheduledJobs/${ScheduledId}`, {
                 method: "PATCH", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json"
@@ -108,7 +115,6 @@ const JobMaindetail = ({ navigation }) => {
                     serviceStatus: "Complete"
                 })
             });
-
             const result = await response.json();
             console.log(result, "i am result");
             setloader(false)
@@ -124,8 +130,6 @@ const JobMaindetail = ({ navigation }) => {
             setToastTextColorState("white")
             setToastColorState("red")
             childRef.current.showToast();
-
-
         }
     }
     return (
@@ -136,7 +140,7 @@ const JobMaindetail = ({ navigation }) => {
                 toastMessage={toastMessage}
                 ref={childRef}
             />
-            <View style={styles.Header}>
+            <ScrollView style={styles.Header}>
                 <Header title="MyJob" onPress={() => navigation.navigate('Homes')} />
                 <View>
                     <View style={styles.InfoView}>
@@ -144,21 +148,23 @@ const JobMaindetail = ({ navigation }) => {
                         <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{serviceType}</Text>
                     </View>
                     <View style={styles.InfoView}>
-                        <Text style={styles.InfoViewText}>Car No : </Text>
-                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Details.carNo}</Text>
-                    </View>
-                    <View style={styles.InfoView}>
                         <Text style={styles.InfoViewText}>Car Type : </Text>
-                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Details.carType}</Text>
+                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{CarType}</Text>
                     </View>
                     <View style={styles.InfoView}>
                         <Text style={styles.InfoViewText}>Address : </Text>
-                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Details.houseName},{Details.streetName},{Details.pincode}</Text>
+                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Address},{SecondAddress}</Text>
                     </View>
                 </View>
+                {
+                    base64toImg === "" ? null :
+                        <View style={{ marginVertical: 30 }}>
+                            <Text style={{ fontSize: 20, textAlign: "center", marginVertical: 20, fontWeight: "600", color: "black" }}>Image Uploaded by Cleaner</Text>
+                            <Image style={{ width: windoWidth, height: 200, resizeMode: "contain", borderWidth: 1, borderColor: 'Orange', borderRadius: 8 }} source={{ uri: base64toImg }} />
+                        </View>
+                }
                 <View style={styles.IVView}>
-                    <Text style={styles.IVText}>Add Image</Text>
-                    {/* <Text style={styles.IVText}>Add Video</Text> */}
+                    <Text style={styles.IVText}>Update Image</Text>
                 </View>
                 <View style={styles.IVView}>
                     <TouchableOpacity style={styles.Box} onPress={openCamera}>
@@ -181,11 +187,11 @@ const JobMaindetail = ({ navigation }) => {
                 <TouchableOpacity style={{ marginHorizontal: 20, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center" }} onPress={Image64}>
                     {
                         loader ? <ActivityIndicator size={22} color="white" /> :
-                            <Text style={{ color: "white", fontWeight: "600" }}>Update Job</Text>
+                            <Text style={{ color: "white", fontWeight: "600" }}>Complete</Text>
                     }
 
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         </>
     )
 }

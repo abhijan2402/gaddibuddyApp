@@ -48,7 +48,7 @@ const MainProfile = () => {
         console.log("Test");
         console.log(JSON.stringify(data));
         try {
-            const response = await fetch(`http://192.168.152.185:9000/api/cleaners/${iD}`, {
+            const response = await fetch(`https://gaadibuddy.com/api/cleaners/${iD}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

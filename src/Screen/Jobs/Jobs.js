@@ -16,10 +16,8 @@ const Jobs = () => {
 
 
   const ListJobs = async () => {
-    console.log("hii");
-    console.log(userID, "i am usweer");
     try {
-      const response = await fetch(`http://192.168.4.185:9000/api/scheduledJobs/`, {
+      const response = await fetch(`https://gaadibuddy.com/api/scheduledJobs/`, {
         method: "GET", // or 'PUT'
       });
       const result = await response.json();
@@ -30,16 +28,15 @@ const Jobs = () => {
       let searchItem = userID._id
 
       if (searchItem != "") {
-        console.log("hhhh");
         const searcheShops = Newd.filter((filteredShops) => {
           return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem.toLowerCase());
         });
         setSearcheData(searcheShops)
       } else {
-        console.log("noooooooooooooooo");
+        console.log("Unable to fetch");
       }
     } catch (error) {
-      console.log(error, 'jj')
+      console.log(error, "error")
     }
   }
   return (
@@ -53,21 +50,7 @@ const Jobs = () => {
           SearcheData.length == 0 ? <ActivityIndicator color="#EE7523" size={"large"} style={{ height: windoHeight / 1.2 }} /> :
 
             SearcheData.map((item) => (
-              // <View style={styles.JobView} key={index}>
-              //   <View style={[styles.CarView, { width: windoWidth / 7.5 }]}>
-              //     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2736/2736918.png" }} style={styles.CarLogo} />
-              //   </View>
-              //   <View style={[styles.CarViewData]}>
-              //     <Text style={[styles.DataInfo, { fontWeight: "600", color: "black", fontSize: 17 }]}>{item.serviceSurface}</Text>
-              //     <Text style={styles.DataInfo}>ELITE i20 -KA MG 4602</Text>
-              //     <Text style={styles.DataInfo}>Service Type - {item.serviceType}</Text>
-              //   </View>
-              //   <View style={[styles.CarView, { width: windoWidth / 4.5 }]}>
-              //     <Text style={styles.timeText}>{item.serviceStatus}</Text>
-              //   </View>
-              // </View>
               <JobSpecification item={item} CarId={item.carId} />
-
             ))
         }
       </ScrollView>

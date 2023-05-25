@@ -25,6 +25,7 @@ const JobListing = ({ navigation }) => {
                 return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem.toLowerCase());
             });
             setSearcheData(searcheShops)
+            console.log(SearcheData, "I am in hob listing page");
         } else {
             console.log("noooooooooooooooo");
         }
@@ -35,9 +36,13 @@ const JobListing = ({ navigation }) => {
             <Header title="My Job Listing" onPress={() => navigation.navigate('Homes')} />
             <ScrollView style={{ marginBottom: "17%" }}>
                 {
-                    SearcheData.map((item, index) => (
-                        <ListJobHome item={item} key={index} Carid={item.carId} onPress={() => navigation.navigate('JobMaindetail', { CarId: item.carId, serviceType: item.service, ScheduledId: item._id })} />
-                    ))
+                    SearcheData.length == [] ?
+                        <View style={{ display: "flex", justifyContent: "center", alignItems: "center", height: windoHeight / 1.2 }}>
+                            <Text style={{ fontSize: 19, color: "black" }}>No Jobs are Available</Text>
+                        </View> :
+                        SearcheData.map((item, index) => (
+                            <ListJobHome item={item} key={index} onPress={() => navigation.navigate('JobMaindetail', { CarType: item.carId.carType, serviceType: item.service, ScheduledId: item._id, Address: item.carId.houseName, SecondAddress: item.carId.streetName })} />
+                        ))
                 }
             </ScrollView>
         </View>

@@ -37,7 +37,7 @@ const SignIn = ({ navigation }) => {
                 throw "please enter password"
 
             setloader(true)
-            const response = await fetch("http://192.168.152.185:9000/api/cleaners/login", {
+            const response = await fetch("https://gaadibuddy.com/api/cleaners/login", {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -51,6 +51,7 @@ const SignIn = ({ navigation }) => {
                 throw result.error
             }
             const finalVal = result.cleaner
+            console.log(finalVal, "hii");
             // const naa = finalVal.name;
             // console.log(naa, "naa");
 
@@ -60,11 +61,11 @@ const SignIn = ({ navigation }) => {
             console.log(userID, "i am valueooo");
 
             setloader(false)
-            setToastMessage("User Logged In");
-            setToastTextColorState("white")
-            setToastColorState("green")
+            // setToastMessage("User Logged In");
+            // setToastTextColorState("white")
+            // setToastColorState("green")
             // setLoading(false)
-            childRef.current.showToast();
+            // childRef.current.showToast();
             // navigation.navigate("HomeNav")
         } catch (error) {
             console.error("Error:", error);
