@@ -23,8 +23,8 @@ const HomeNavigation = () => {
       <Tab.Screen name="MainHome" component={MainHomeNavigation} options={{
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Feather name='home' color={focused ? '#F05656' : '#808080'} size={22} />
-            <Text style={{ color: focused ? '#F05656' : '#808080', fontFamily: "SourceSansPro-Regular" }}>Home</Text>
+            <Feather name='home' color={focused ? '#EE7523' : '#808080'} size={22} />
+            <Text style={{ color: focused ? '#EE7523' : '#808080', fontFamily: "SourceSansPro-Regular" }}>Home</Text>
           </View>
         )
       }} />
@@ -40,8 +40,8 @@ const HomeNavigation = () => {
       <Tab.Screen name='Prof' component={ProfileNavigation} options={{
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <MaterialCommunityIcons name='account' color={focused ? '#F05656' : '#808080'} size={22} />
-            <Text style={{ color: focused ? '#F05656' : '#808080', textAlign: "center", fontFamily: "SourceSansPro-Regular" }}>Account</Text>
+            <MaterialCommunityIcons name='account' color={focused ? '#EE7523' : '#808080'} size={22} />
+            <Text style={{ color: focused ? '#EE7523' : '#808080', textAlign: "center", fontFamily: "SourceSansPro-Regular" }}>Account</Text>
           </View>
         )
       }}

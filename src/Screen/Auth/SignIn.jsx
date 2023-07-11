@@ -1,11 +1,10 @@
 import { View, Text, Image, TouchableOpacity, TextInput, Pressable, StyleSheet, Dimensions, ActivityIndicator } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Input } from '../../CommanStyles/InputSyles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from '../../Components/Toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserID, setUserDetails } from '../../redux/actions/userAction';
-// import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 const SignIn = ({ navigation }) => {
@@ -52,12 +51,12 @@ const SignIn = ({ navigation }) => {
             }
             const finalVal = result.cleaner
             console.log(finalVal, "hii");
-            // const naa = finalVal.name;
-            // console.log(naa, "naa");
 
             dispatch(setUserID(finalVal))
             dispatch(setUserDetails(true))
-            // dispatch(setUserDetails("hii"))
+            const string = JSON.stringify(finalVal)
+            await AsyncStorage.setItem('LoginDet', string)
+            const ooo = await AsyncStorage.getItem('LoginDet')
             console.log(userID, "i am valueooo");
 
             setloader(false)

@@ -20,7 +20,7 @@ const JobAvailable = ({ NOJ, Type, JobsLists, onPress }, { navigation }) => {
             });
             setSearcheData(searcheShops)
         } else {
-            console.log("noooooooooooooooo");
+            console.log("error");
         }
     }
     return (
@@ -40,12 +40,15 @@ export default JobAvailable
 
 const styles = StyleSheet.create({
     MainView: {
-        borderWidth: 2,
+        borderWidth: 1.5,
         borderColor: "#EE7523",
         marginHorizontal: 15,
         borderRadius: 8,
         padding: 10,
-        marginVertical: 20
+        marginVertical: 20,
+        elevation: 5,
+        backgroundColor: "white",
+        shadowColor: "red"
     },
     Header: {
         display: "flex",

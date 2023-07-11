@@ -7,6 +7,9 @@ const windoHeight = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeHeader from '../../Components/HomeHeader';
 import { UpdateStatus } from "../../APIs/UpdateJob";
+import CheckInOut from '../../Components/CheckInOut';
+import { CheckIn } from '../../APIs/Post/CheckIn';
+import { CheckOut } from '../../APIs/Post/CheckOut';
 const Home = ({ navigation }) => {
   const { userID, user } = useSelector(state => state.user);
   const [data, setdata] = useState([])
@@ -21,6 +24,7 @@ const Home = ({ navigation }) => {
   const [SearchResult, setSearchResult] = useState([])
   const [wholedata, setwholedata] = useState([])
   const [searchMod, setsearchMod] = useState(false)
+  const [visibleData, setvisibleData] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
@@ -30,7 +34,7 @@ const Home = ({ navigation }) => {
     }, 2000);
   }, [])
   const tryNext = () => {
-    console.log("I am try next");
+    // console.log("I am try next");
     let today = new Date();
     today.setDate(today.getDate() + 1);
     let goAhead = today
@@ -42,12 +46,13 @@ const Home = ({ navigation }) => {
     olddate.setDate(date.getDate() - 2);
     let tomorrow = new Date();
     tomorrow.setDate(date.getDate() + 5);
-    console.log("tomorrow => ", tomorrow);
-    console.log(date, nextdate);
+    // console.log("tomorrow => ", tomorrow);
+    // console.log(date, nextdate);
     const data = {
       start: olddate,
       end: tomorrow
     }
+    // console.log(data, "i am finidng for the data");
     try {
       const response = await fetch(`https://gaadibuddy.com/api/scheduledJobs/ByDate/cleaner/${userID._id}`, {
         method: "POST", // or 'PUT'
@@ -57,22 +62,26 @@ const Home = ({ navigation }) => {
         body: JSON.stringify(data),
       });
       const result = await response.json();
+      // console.log(result, "i am resukt");
       let Newd = result.scheduledJobs
       setwholedata(Newd)
 
       // console.log(Newd, "i am new");
       // setSearcheData(Newd)
-      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-" + date.getDate();
-      console.log(format2, "format"); // 23/7/2022
+      // console.log(wholedata, " i am wholedata");
+      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
+      // console.log(format2, "format"); // 23/7/2022
       // console.log(date, "i amdafe");
       // "2023-05-11"
-      console.log("2023-05-11");
+      // console.log("2023-05-11");
+      // console.log(Newd, " ia m nded");
+      // console.log(searchItem1, " i am searchItem1");
       let searchItem1 = format2
       if (searchItem1 != "") {
         const searcheShops1 = await Newd.filter((filteredShops) => {
           return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem1.toLowerCase());
         });
-        console.log(searcheShops1, " i am job");
+        // console.log(searcheShops1, " i am job");
         setSearcheData(searcheShops1)
       }
     } catch (error) {
@@ -80,10 +89,13 @@ const Home = ({ navigation }) => {
     }
   }
   function findLength(searchItem2) {
+    // console.log(SearcheData, " i am trying data");
+    // console.log(searchItem2, " i am searchItem2");
     if (searchItem2 != "") {
       const searcheShops2 = SearcheData.filter((filteredShops) => {
         return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem2.toLowerCase());
       });
+      // console.log(searcheShops2, "i amher");
       return searcheShops2.length
     }
   }
@@ -99,7 +111,7 @@ const Home = ({ navigation }) => {
       setDate(date)
       const OnlyDates = date.getDate()
       setonlyDate(OnlyDates)
-      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-" + date.getDate();
+      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
       // console.log(format2, "format");
       // console.log("2023-05-11");
       let searchItem1 = format2
@@ -121,16 +133,16 @@ const Home = ({ navigation }) => {
       setDate(date)
       const OnlyDates = date.getDate()
       setonlyDate(OnlyDates)
-      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-" + date.getDate();
-      console.log(format2, "format");
-      console.log("2023-05-11");
+      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
+      // console.log(format2, "format");
+      // console.log("2023-05-11");
       let searchItem1 = format2
-      console.log(wholedata, " i am whokenftat");
+      // console.log(wholedata, " i am whokenftat");
       if (searchItem1 != "") {
         const searcheShops1 = wholedata.filter((filteredShops) => {
           return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem1.toLowerCase());
         });
-        console.log(searcheShops1, " i am Searched job");
+        // console.log(searcheShops1, " i am Searched job");
         setSearchResult(searcheShops1)
         setsearchMod(true)
         setDailyJob(findLengthUpdated("Daily", searcheShops1))
@@ -142,57 +154,103 @@ const Home = ({ navigation }) => {
 
 
   const findLengthUpdated = (TypeForm, FilterArray) => {
-    console.log(FilterArray, "i am filterarray");
+    // console.log(FilterArray, "i am filterarray");
     const searchItem2 = TypeForm
     if (searchItem2 != "") {
       const searcheShops2 = FilterArray.filter((filteredShops) => {
         return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem2.toLowerCase());
       });
-      console.log("It is juts fir checing ", searcheShops2.length);
+      // console.log("It is juts fir checing ", searcheShops2.length);
       return searcheShops2.length
     }
   }
   const test = () => {
     setsearchMod(false)
     const UpdateDate = new Date();
-    console.log(UpdateDate, "jjj");
+    // console.log(UpdateDate, "jjj");
     const OnlyDates = date.setDate(UpdateDate.getDate())
-    console.log(OnlyDates, "date");
+    // console.log(OnlyDates, "date");
     setonlyDate(OnlyDates)
-    console.log(searchMod, "I am search Mod");
+    // console.log(searchMod, "I am search Mod");
     ListJobs()
   }
+  const CHeckedIn = async () => {
+    const resp = await CheckIn(userID._id)
+    if (resp) {
+      setvisibleData(true)
+      await AsyncStorage.setItem('CheckedIn', "true")
+      const gettingItem = await AsyncStorage.getItem('CheckedIn')
+    }
+  }
+  const CheckedOut = async () => {
+    const resp = await CheckOut(userID._id)
+    if (resp) {
+      setvisibleData(false)
+      const finalVal = await AsyncStorage.removeItem('CheckedIn')
+    }
+  }
+  useEffect(() => {
+    checkCleanerAttendence()
+  }, [])
+  const checkCleanerAttendence = async () => {
+    const gettingItem = await AsyncStorage.getItem('CheckedIn')
+    if (gettingItem == null) {
+      console.log("I am in if");
+      setvisibleData(false)
+    }
+    else {
+      console.log("I am in else");
+      setvisibleData(true)
+    }
+  }
+
   return (
     <>
-      <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <HomeHeader />
-        <TouchableOpacity style={{ borderRadius: 8, marginHorizontal: 20, backgroundColor: 'orange', paddingHorizontal: 20, paddingVertical: 5 }} onPress={test}>
-          <Text style={{ fontSize: 15, color: "white" }}>Refresh</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 20 }}>
-        <TouchableOpacity onPress={() => ToFindNextDate("Sub")}>
-          <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/271/271220.png" }} style={styles.DateChangeArrow} />
-        </TouchableOpacity>
-        <Text style={{ fontSize: 20, color: 'black', fontWeight: "600" }}>{date.getDate()}-{date.getUTCMonth() + 1}-{date.getFullYear()}</Text>
-        <TouchableOpacity onPress={() => ToFindNextDate("Add")}>
-          <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/32/32213.png" }} style={styles.DateChangeArrow} />
-        </TouchableOpacity>
-      </View>
-      {
-        searchMod ? <View>
-          {/* <Text>hiii</Text> */}
-          <JobAvailable NOJ={MonthlyJob} Type="One Time" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearchResult, Type: "One Time" })} />
-          <JobAvailable NOJ={DailyJob} Type="Daily" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearchResult, Type: "Daily" })} />
-          <JobAvailable NOJ={weeklyJob} Type="Weekly" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearchResult, Type: "Weekly" })} />
-        </View> :
-          <View>
-            {/* <Text>helllo</Text> */}
-            <JobAvailable NOJ={findLength("One Time")} Type="One Time" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearcheData, Type: "One Time" })} />
-            <JobAvailable NOJ={findLength("Daily")} Type="Daily" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearcheData, Type: "Daily" })} />
-            <JobAvailable NOJ={findLength("Weekly")} Type="Weekly" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearcheData, Type: "Weekly" })} />
+      <View style={{ display: visibleData ? "flex" : "none", height: windoHeight, backgroundColor: "#f5f5f7" }}>
+        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <HomeHeader />
+          <TouchableOpacity style={{ borderRadius: 8, marginHorizontal: 20, backgroundColor: '#EE7523', paddingHorizontal: 20, paddingVertical: 5 }} onPress={test}>
+            <Text style={{ fontSize: 15, color: "white" }}>Refresh</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 20 }}>
+          <TouchableOpacity onPress={() => ToFindNextDate("Sub")}>
+            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/271/271220.png" }} style={styles.DateChangeArrow} />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 20, color: 'black', fontWeight: "600" }}>{date.getDate()}-{date.getUTCMonth() + 1}-{date.getFullYear()}</Text>
+          <TouchableOpacity onPress={() => ToFindNextDate("Add")}>
+            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/32/32213.png" }} style={styles.DateChangeArrow} />
+          </TouchableOpacity>
+        </View>
+        {
+          searchMod ? <View>
+            {/* <Text>hiii</Text> */}
+            <JobAvailable NOJ={MonthlyJob} Type="One Time" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearchResult, Type: "One Time" })} />
+            <JobAvailable NOJ={DailyJob} Type="Daily" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearchResult, Type: "Daily" })} />
+            <JobAvailable NOJ={weeklyJob} Type="Weekly" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearchResult, Type: "Weekly" })} />
+          </View> :
+            <View>
+              {/* <Text>helllo</Text> */}
+              <JobAvailable NOJ={findLength("One Time")} Type="One Time" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearcheData, Type: "One Time" })} />
+              <JobAvailable NOJ={findLength("Daily")} Type="Daily" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearcheData, Type: "Daily" })} />
+              <JobAvailable NOJ={findLength("Weekly")} Type="Weekly" JobsLists={SearcheData} onPress={() => navigation.navigate("JobList", { JobsLists: SearcheData, Type: "Weekly" })} />
+            </View>
+        }
+        <View style={{ display: "flex", alignItems: "center", height: !visibleData ? windoHeight : "10%", justifyContent: "center" }}>
+          <View style={styles.Container}>
+            <TouchableOpacity style={[styles.BtnTO, { display: visibleData ? "flex" : "none", width: "100%" }]} onPress={CheckedOut}>
+              <Text style={styles.BtnText}>Set Check Out</Text>
+            </TouchableOpacity>
           </View>
-      }
+        </View>
+      </View>
+      <View style={{ display: "flex", alignItems: "center", height: !visibleData ? windoHeight : "10%", justifyContent: "center" }}>
+        <View style={[styles.Container, { display: visibleData ? "none" : "flex" }]}>
+          <TouchableOpacity style={[styles.BtnTO, { width: "100%" }]} onPress={CHeckedIn}>
+            <Text style={styles.BtnText}>Check In to see Jobs</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   )
 }
@@ -208,5 +266,24 @@ const styles = StyleSheet.create({
   DateChangeArrow: {
     width: 30,
     height: 30
+  },
+  Container: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: "5%"
+  },
+  BtnTO: {
+    borderRadius: 8,
+    paddingHorizontal: "10%",
+    paddingVertical: 10,
+    backgroundColor: "#EE7523"
+  },
+  BtnText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "500",
+    textAlign: "center"
   }
 })

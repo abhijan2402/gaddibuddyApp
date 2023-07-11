@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
@@ -25,17 +25,31 @@ const ListJobHome = ({ item, onPress }) => {
 
     return (
         <View style={styles.MainView}>
-            <Text style={styles.MainViewText}>service {item.service}</Text>
-            {/* <Text style={styles.MainViewText}>Model-{CarNo}</Text> */}
-            {/* <Text style={styles.MainViewText}>Address {Carid.houseName} ,{Carid.streetName} ,{Carid.pincode}</Text> */}
-            <Text style={styles.MainViewText}>Service Type - {item.serviceType}</Text>
-            <Text>{item.start}</Text>
-            <View style={[styles.MainViewText, { display: "flex", flexDirection: "row" }]}>
-                <Text style={styles.MainViewText}>Status - </Text>
+            <View style={styles.ContainerDetailStyle}>
+                <Text style={styles.DetailStyle}>Service - </Text>
+                <Text style={styles.DetailStyle}>{item.service}</Text>
+            </View>
+            <View style={styles.ContainerDetailStyle}>
+                <Text style={styles.DetailStyle}>Service Type - </Text>
+                <Text style={styles.DetailStyle}>{item.serviceType}</Text>
+            </View>
+            <View style={styles.ContainerDetailStyle}>
+                <Text style={styles.DetailStyle}>Start Date - </Text>
+                <Text style={styles.DetailStyle}>{item.start.slice(0, 10)}</Text>
+            </View>
+            <View style={[styles.MainViewText, { display: "flex", flexDirection: "row", alignItems: "center" }]}>
+                <Text style={styles.DetailStyle}>Status - </Text>
                 {
                     item.serviceStatus == "Complete" ?
-                        <Text style={[styles.MainViewText, { color: "green", fontWeight: "800", fontSize: 17 }]}>{item.serviceStatus}</Text> :
-                        <Text style={[styles.MainViewText]}>{item.serviceStatus}</Text>
+                        <>
+                            <Text style={[styles.MainViewText, { color: "green", fontWeight: "800", fontSize: 17 }]}>{item.serviceStatus}</Text>
+                            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/190/190411.png" }} style={{ width: 20, height: 20 }} />
+                        </>
+                        :
+                        <>
+                            <Text style={[styles.MainViewText, { color: "red", fontWeight: "800", fontSize: 17, }]}>{item.serviceStatus}</Text>
+                            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/10755/10755684.png" }} style={{ width: 20, height: 20 }} />
+                        </>
 
                 }
             </View>
@@ -57,12 +71,16 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         paddingVertical: 8,
-        borderColor: "#EE7523"
+        borderColor: "#EE7523",
+        backgroundColor: "white",
+        elevation: 5,
+        shadowColor: "#EE7528"
     },
     MainViewText: {
         fontSize: 15,
         color: "black",
-        marginVertical: 5
+        marginVertical: 5,
+        marginRight: "2%"
     },
     CarView: {
         justifyContent: "flex-end",
@@ -78,6 +96,16 @@ const styles = StyleSheet.create({
     CarText: {
         textAlign: "center",
         color: "white"
+    },
+    ContainerDetailStyle: {
+        display: "flex",
+        flexDirection: "row",
+        marginVertical: 5
+    },
+    DetailStyle: {
+        fontSize: 15,
+        color: "black",
+        fontWeight: "600"
     }
 
 

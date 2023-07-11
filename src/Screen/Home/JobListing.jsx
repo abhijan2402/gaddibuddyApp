@@ -41,7 +41,7 @@ const JobListing = ({ navigation }) => {
                             <Text style={{ fontSize: 19, color: "black" }}>No Jobs are Available</Text>
                         </View> :
                         SearcheData.map((item, index) => (
-                            <ListJobHome item={item} key={index} onPress={() => navigation.navigate('JobMaindetail', { CarType: item.carId.carType, serviceType: item.service, ScheduledId: item._id, Address: item.carId.houseName, SecondAddress: item.carId.streetName })} />
+                            <ListJobHome item={item} key={index} onPress={() => navigation.navigate('JobMaindetail', { CarType: item.carId.carType, serviceType: item.service, ScheduledId: item._id, Address: item.carId.houseName, SecondAddress: item.carId.streetName, item: item })} />
                         ))
                 }
             </ScrollView>

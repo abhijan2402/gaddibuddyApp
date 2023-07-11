@@ -11,7 +11,7 @@ import Toast from '../../Components/Toast';
 import { ActivityIndicator } from 'react-native-paper';
 const JobMaindetail = ({ navigation, }) => {
     const route = useRoute();
-    const { CarType, serviceType, ScheduledId, Address, SecondAddress } = route.params;
+    const { CarType, serviceType, ScheduledId, Address, SecondAddress, item } = route.params;
     const [Details, setDetails] = useState([])
     const [Image1, setImage1] = useState("")
     const [Image64test, setImage64test] = useState("")
@@ -26,7 +26,7 @@ const JobMaindetail = ({ navigation, }) => {
     const [loader, setloader] = useState(false)
 
     useEffect(() => {
-        console.log(ScheduledId, "secheduled id");
+        console.log(ScheduledId, item, "secheduled id");
         GetImage()
     }, [])
     let options = {
@@ -52,7 +52,8 @@ const JobMaindetail = ({ navigation, }) => {
         let Types = result.assets[0].type
         setImageTypoe(Types)
     }
-    const Image64 = async () => {
+    const Image64 = async (jobStatus) => {
+        console.log(jobStatus, "njb");
         setloader(true)
         ImgToBase64.getBase64String(`${Image1}`)
             .then((base64String) => {
@@ -73,13 +74,13 @@ const JobMaindetail = ({ navigation, }) => {
                         })
                     });
                     console.log(response, "imager uploaded");
-                    UpdateStatus()
+                    UpdateStatus(jobStatus)
                 } catch (error) {
                     console.log(error, "error");
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err, " i am image error");
             });
     }
 
@@ -89,18 +90,15 @@ const JobMaindetail = ({ navigation, }) => {
                 method: "GET", // or 'PUT'
             });
             const result = await response.json();
-            console.log(result.imgSource, "imager uploaded");
-            const finalImage = result.imgSource
-            console.log(finalImage);
+            // console.log(result.imgSource, "imager uploaded");
             setbase64toImg(result.imgSource);
-            console.log(base64toImg, "i am thre final image");
-
-
+            // console.log(base64toImg, "i am thre final image");
         } catch (error) {
             console.log(error, "error");
         }
     }
-    const UpdateStatus = async () => {
+    const UpdateStatus = async (jobStatus) => {
+        console.log(jobStatus, "i am jonb status");
         try {
             const keyVal = JSON.stringify(ScheduledId);
             console.log(keyVal, "i am key val");
@@ -126,7 +124,7 @@ const JobMaindetail = ({ navigation, }) => {
         } catch (error) {
             console.log(error, "dmekrnfrfm");
             setloader(false)
-            setToastMessage("SOme issue in Updating the status");
+            setToastMessage("Some issue in Updating the status");
             setToastTextColorState("white")
             setToastColorState("red")
             childRef.current.showToast();
@@ -148,12 +146,12 @@ const JobMaindetail = ({ navigation, }) => {
                         <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{serviceType}</Text>
                     </View>
                     <View style={styles.InfoView}>
-                        <Text style={styles.InfoViewText}>Car Type : </Text>
-                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{CarType}</Text>
+                        <Text style={styles.InfoViewText}>Car Details : </Text>
+                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{item.carId.carMake} - {item.carId.carNo}</Text>
                     </View>
                     <View style={styles.InfoView}>
                         <Text style={styles.InfoViewText}>Address : </Text>
-                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{Address},{SecondAddress}</Text>
+                        <Text style={[styles.InfoViewText, { fontWeight: "400", width: "80%", }]}>{Address},{SecondAddress}</Text>
                     </View>
                 </View>
                 {
@@ -184,13 +182,20 @@ const JobMaindetail = ({ navigation, }) => {
                             <Image source={{ uri: Image1 }} style={styles.ImageSeleted} />
                     }
                 </View>
-                <TouchableOpacity style={{ marginHorizontal: 20, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center" }} onPress={Image64}>
+                <TouchableOpacity style={{ marginHorizontal: 20, marginVertical: 10, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center" }} onPress={() => { Image64("Complete") }}>
                     {
                         loader ? <ActivityIndicator size={22} color="white" /> :
                             <Text style={{ color: "white", fontWeight: "600" }}>Complete</Text>
                     }
 
                 </TouchableOpacity>
+                {/* <TouchableOpacity style={{ marginHorizontal: 20, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center", marginVertical: 10 }} onPress={() => { Image64("Car not Present") }}>
+                    {
+                        loader ? <ActivityIndicator size={22} color="white" /> :
+                            <Text style={{ color: "white", fontWeight: "600" }}>CAR NOT PRESENT</Text>
+                    }
+
+                </TouchableOpacity> */}
             </ScrollView>
         </>
     )

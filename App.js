@@ -6,18 +6,31 @@ import HomeNavigation from './Navigation/HomeNavigation';
 import SignIn from './src/Screen/Auth/SignIn';
 import Signup from './src/Screen/Auth/Signup';
 import BoardingScreen from './src/Screen/Auth/BoardingScreen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserID, setUserDetails } from './src/redux/actions/userAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const App = () => {
+  const dispatch = useDispatch();
   const Stack = createNativeStackNavigator();
-  // const [user, setuser] = useState(true)
   const { userID, userDetails } = useSelector(state => state.user);
+  const CheckUser = async () => {
+    const userSettle = await AsyncStorage.getItem('LoginDet')
+    if (userSettle == null) {
+      dispatch(setUserDetails(false))
+    }
+    else {
+      const convertDetail = JSON.parse(userSettle);
+      dispatch(setUserID(convertDetail))
+      dispatch(setUserDetails(true))
+    }
+  }
   useEffect(() => {
+    CheckUser();
     console.log(userDetails, userID, " i amusre");
   }, [])
 
   return (
-    // // <SignIn />
-    // <Signup />
     <>
 
       <NavigationContainer>
