@@ -77,13 +77,25 @@ const Signup = ({ navigation }) => {
                     <Image source={require("../../assests/logo.png")} style={Input.ImageLogo} />
                 </View>
                 <View>
-                    <TextInput placeholder='Enter UserName' style={Input.InputField} onChangeText={(value) => { setName(value) }} />
+                    <View style={Input.InPutContainer}>
+                        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3870/3870822.png" }} style={Input.Logo} />
+                        <TextInput placeholder='Enter Username' placeholderTextColor={"grey"} style={Input.InputField} onChangeText={(value) => { setName(value) }} />
+                    </View>
+                    <View style={Input.InPutContainer}>
+                        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3247/3247310.png" }} style={Input.Logo} />
+                        <TextInput placeholder='Enter Phone Number' placeholderTextColor={"grey"} style={Input.InputField} onChangeText={(value) => { setPhoneNumber(value) }} />
+                    </View>
+                    <View style={Input.InPutContainer}>
+                        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/4241/4241429.png" }} style={Input.Logo} />
+                        <TextInput placeholder='Enter Password' placeholderTextColor={"grey"} style={Input.InputField} onChangeText={(value) => { setPassword(value) }} />
+                    </View>
+                    {/* <TextInput placeholder='Enter UserName' style={Input.InputField} onChangeText={(value) => { setName(value) }} />
                     <TextInput placeholder='Enter Phone Number' style={Input.InputField} onChangeText={(value) => { setPhoneNumber(value) }} />
-                    <TextInput placeholder='Enter Password' style={Input.InputField} onChangeText={(value) => { setPassword(value) }} />
+                    <TextInput placeholder='Enter Password' style={Input.InputField} onChangeText={(value) => { setPassword(value) }} /> */}
                     <TouchableOpacity style={Input.SignUpButton} onPress={SignUp}>
                         {
                             loader ? <ActivityIndicator size={22} color="white" /> :
-                                <Text style={Input.SignUpButtonText}>Sign Up</Text>
+                                <Text style={Input.SignUpButtonText}>Create Account</Text>
                         }
                     </TouchableOpacity>
                 </View>

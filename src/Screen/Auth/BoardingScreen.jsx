@@ -24,6 +24,7 @@ const BoardingScreen = ({ navigation }) => {
             <View style={styles.Footer}>
                 <View style={styles.WelcomeView}>
                     <Text style={styles.WelcomeText}>Welcome to gaadibuddy</Text>
+                    {/* <Image source={require('../../assests/carBS.png')} style={{ width: "80%", height: 150 }} /> */}
                 </View>
                 <View style={styles.BtnView}>
                     <TouchableOpacity style={[styles.BtnViewMain, { borderColor: 'white' }]} onPress={() => navigation.navigate('SignIn')}>

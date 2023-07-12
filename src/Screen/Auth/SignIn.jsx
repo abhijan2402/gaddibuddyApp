@@ -88,8 +88,15 @@ const SignIn = ({ navigation }) => {
                     <Image source={require("../../assests/logo.png")} style={[Input.ImageLogo]} />
                 </View>
                 <View>
-                    <TextInput placeholder='Enter Phone Number' style={Input.InputField} onChangeText={(value) => { setMobNum(value) }} keyboardType='numeric' />
-                    <TextInput placeholder='Enter Password' style={Input.InputField} onChangeText={(value) => { setPasswod(value) }} />
+                    <View style={Input.InPutContainer}>
+                        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3247/3247310.png" }} style={Input.Logo} />
+                        <TextInput placeholder='Enter Phone Number' placeholderTextColor={"grey"} style={Input.InputField} onChangeText={(value) => { setMobNum(value) }} keyboardType='numeric' />
+                    </View>
+                    <View style={Input.InPutContainer}>
+                        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/4241/4241429.png" }} style={Input.Logo} />
+                        <TextInput placeholder='Enter Password' placeholderTextColor={"grey"} style={Input.InputField} onChangeText={(value) => { setPasswod(value) }} />
+                    </View>
+                    {/* <TextInput placeholder='Enter Password' style={Input.InputField} onChangeText={(value) => { setPasswod(value) }} /> */}
                     <TouchableOpacity style={Input.SignUpButton} onPress={Login}>
                         {
                             loader ? <ActivityIndicator size={22} color="white" /> :

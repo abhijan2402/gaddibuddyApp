@@ -62,20 +62,9 @@ const Home = ({ navigation }) => {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      // console.log(result, "i am resukt");
       let Newd = result.scheduledJobs
       setwholedata(Newd)
-
-      // console.log(Newd, "i am new");
-      // setSearcheData(Newd)
-      // console.log(wholedata, " i am wholedata");
-      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
-      // console.log(format2, "format"); // 23/7/2022
-      // console.log(date, "i amdafe");
-      // "2023-05-11"
-      // console.log("2023-05-11");
-      // console.log(Newd, " ia m nded");
-      // console.log(searchItem1, " i am searchItem1");
+      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-" + date.getDate();
       let searchItem1 = format2
       if (searchItem1 != "") {
         const searcheShops1 = await Newd.filter((filteredShops) => {
@@ -111,7 +100,21 @@ const Home = ({ navigation }) => {
       setDate(date)
       const OnlyDates = date.getDate()
       setonlyDate(OnlyDates)
-      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
+      // console.log("I am date ", "Add", date.getDate());
+      let format2;
+      if (date.getDate() > 9) {
+        // console.log("Hi");
+        format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-" + date.getDate();
+      }
+      else {
+        format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
+      }
+      // console.log(format2, " I am format 2 if");
+
+      //last one
+      // let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-" + date.getDate();
+
+
       // console.log(format2, "format");
       // console.log("2023-05-11");
       let searchItem1 = format2
@@ -133,16 +136,27 @@ const Home = ({ navigation }) => {
       setDate(date)
       const OnlyDates = date.getDate()
       setonlyDate(OnlyDates)
-      let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
-      // console.log(format2, "format");
-      // console.log("2023-05-11");
+      // console.log("I am date ", "Sub", date.getDate());
+      let format2;
+      if (date.getDate() > 9) {
+        console.log("Hi");
+        format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-" + date.getDate();
+      }
+      else {
+        console.log("Helloe else");
+        format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
+      }
+      console.log(format2, " I am format 2 else");
+
+      //last one
+      // let format2 = date.getFullYear() + "-0" + `${date.getMonth() + 1}` + "-0" + date.getDate();
+
+
       let searchItem1 = format2
-      // console.log(wholedata, " i am whokenftat");
       if (searchItem1 != "") {
         const searcheShops1 = wholedata.filter((filteredShops) => {
           return Object.values(filteredShops).join(" ").toLowerCase().includes(searchItem1.toLowerCase());
         });
-        // console.log(searcheShops1, " i am Searched job");
         setSearchResult(searcheShops1)
         setsearchMod(true)
         setDailyJob(findLengthUpdated("Daily", searcheShops1))
