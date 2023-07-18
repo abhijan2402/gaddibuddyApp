@@ -53,35 +53,40 @@ const JobMaindetail = ({ navigation, }) => {
         setImageTypoe(Types)
     }
     const Image64 = async (jobStatus) => {
-        console.log(jobStatus, "njb");
+        console.log(ImageTypoe, "I am check");
         setloader(true)
-        ImgToBase64.getBase64String(`${Image1}`)
-            .then((base64String) => {
-                ;
-                let UVC = `data:${ImageTypoe};base64,` + base64String;
-                console.log(UVC);
-                console.log(Image64test, 'j');
-                try {
+        if (ImageTypoe == "") {
+            UpdateStatus(jobStatus)
+        }
+        else {
+            ImgToBase64.getBase64String(`${Image1}`)
+                .then((base64String) => {
+                    ;
+                    let UVC = `data:${ImageTypoe};base64,` + base64String;
+                    console.log(UVC);
+                    console.log(Image64test, 'j');
+                    try {
 
-                    const response = fetch(`https://gaadibuddy.com/api/imageUpload/${ScheduledId}`, {
-                        method: "POST", // or 'PUT'
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"
-                        },
-                        body: JSON.stringify({
-                            "imgSource": UVC
-                        })
-                    });
-                    console.log(response, "imager uploaded");
-                    UpdateStatus(jobStatus)
-                } catch (error) {
-                    console.log(error, "error");
-                }
-            })
-            .catch((err) => {
-                console.log(err, " i am image error");
-            });
+                        const response = fetch(`https://gaadibuddy.com/api/imageUpload/${ScheduledId}`, {
+                            method: "POST", // or 'PUT'
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Access-Control-Allow-Origin": "*"
+                            },
+                            body: JSON.stringify({
+                                "imgSource": UVC
+                            })
+                        });
+                        console.log(response, "imager uploaded");
+                        UpdateStatus(jobStatus)
+                    } catch (error) {
+                        console.log(error, "error");
+                    }
+                })
+                .catch((err) => {
+                    console.log(err, " i am image error");
+                });
+        }
     }
 
     const GetImage = async () => {
@@ -118,7 +123,7 @@ const JobMaindetail = ({ navigation, }) => {
             setloader(false)
             setToastMessage("Status Updated");
             setToastTextColorState("white")
-            setToastColorState("green")
+            setToastColorState("#EE7523")
             childRef.current.showToast();
             setImage1("")
         } catch (error) {
@@ -139,63 +144,74 @@ const JobMaindetail = ({ navigation, }) => {
                 ref={childRef}
             />
             <ScrollView style={styles.Header}>
-                <Header title="MyJob" onPress={() => navigation.navigate('Homes')} />
-                <View>
+                <Header title="MyJob" onPress={() => navigation.goBack()} />
+                <View style={styles.MainCont}>
+                    <Text style={{ fontSize: 18, fontWeight: "600", marginVertical: 10, color: "#EE7523" }}>Customer Details</Text>
                     <View style={styles.InfoView}>
                         <Text style={styles.InfoViewText}>Service : </Text>
                         <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{serviceType}</Text>
                     </View>
                     <View style={styles.InfoView}>
                         <Text style={styles.InfoViewText}>Car Details : </Text>
-                        <Text style={[styles.InfoViewText, { fontWeight: "400" }]}>{item.carId.carMake} - {item.carId.carNo}</Text>
+                        <Text style={[styles.InfoViewText, { fontWeight: "400", width: "70%" }]}>{item.carId.carMake} {item.carId.carType} - {item.carId.carNo}</Text>
                     </View>
                     <View style={styles.InfoView}>
                         <Text style={styles.InfoViewText}>Address : </Text>
-                        <Text style={[styles.InfoViewText, { fontWeight: "400", width: "80%", }]}>{Address},{SecondAddress}</Text>
+                        <Text style={[styles.InfoViewText, { fontWeight: "400", width: "75%" }]}>{Address},{SecondAddress}</Text>
                     </View>
                 </View>
                 {
                     base64toImg === "" ? null :
-                        <View style={{ marginVertical: 30 }}>
-                            <Text style={{ fontSize: 20, textAlign: "center", marginVertical: 20, fontWeight: "600", color: "black" }}>Image Uploaded by Cleaner</Text>
-                            <Image style={{ width: windoWidth, height: 200, resizeMode: "contain", borderWidth: 1, borderColor: 'Orange', borderRadius: 8 }} source={{ uri: base64toImg }} />
+                        <View style={styles.UploadContainer}>
+                            <View style={{ marginVertical: 10, alignItems: "center" }}>
+                                <Text style={{ fontSize: 18, textAlign: "center", marginVertical: 10, fontWeight: "600", color: "#EE7523", }}>Image Uploaded by Cleaner</Text>
+                                <Image style={{ width: 210, height: 270, resizeMode: "contain", borderRadius: 8, marginBottom: "5%" }} source={{ uri: base64toImg }} />
+                            </View>
                         </View>
                 }
-                <View style={styles.IVView}>
-                    <Text style={styles.IVText}>Update Image</Text>
-                </View>
-                <View style={styles.IVView}>
-                    <TouchableOpacity style={styles.Box} onPress={openCamera}>
-                        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/685/685655.png" }} style={styles.CameraIcon} />
-                        <Text style={styles.OpenCam}>Open Camera</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Box} onPress={openGallery}>
-                        <Image source={{ uri: "https://static.thenounproject.com/png/17840-200.png" }} style={styles.CameraIcon} />
-                        <Text style={styles.OpenCam}>Open Gallery</Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    {
-                        Image1 == "" ? <View style={{ display: "flex", justifyContent: "center", alignItems: "center", height: windoHeight / 4 }}>
-                            <Text style={{ fontSize: 18, color: "black", fontWeight: "600" }}>No Image is Selected</Text>
-                        </View> :
-                            <Image source={{ uri: Image1 }} style={styles.ImageSeleted} />
-                    }
-                </View>
-                <TouchableOpacity style={{ marginHorizontal: 20, marginVertical: 10, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center" }} onPress={() => { Image64("Complete") }}>
-                    {
-                        loader ? <ActivityIndicator size={22} color="white" /> :
-                            <Text style={{ color: "white", fontWeight: "600" }}>Complete</Text>
-                    }
+                <View style={styles.UploadContainer}>
+                    <View style={styles.IVView}>
+                        <Text style={[styles.IVText, { color: "#EE7523" }]}>Update Image</Text>
+                        <TouchableOpacity style={styles.Box} onPress={openCamera}>
+                            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/1042/1042339.png" }} style={styles.CameraIcon} />
+                            <Text style={styles.OpenCam}>Camera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.Box} onPress={openGallery}>
+                            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2659/2659360.png" }} style={styles.CameraIcon} />
+                            <Text style={styles.OpenCam}>Gallery</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/* <View style={styles.IVView}>
+                        <TouchableOpacity style={styles.Box} onPress={openCamera}>
+                            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/685/685655.png" }} style={styles.CameraIcon} />
+                            <Text style={styles.OpenCam}>Open Camera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.Box} onPress={openGallery}>
+                            <Image source={{ uri: "https://static.thenounproject.com/png/17840-200.png" }} style={styles.CameraIcon} />
+                            <Text style={styles.OpenCam}>Open Gallery</Text>
+                        </TouchableOpacity>
+                    </View> */}
+                    <View>
+                        {
+                            Image1 == "" ? <View style={{ display: "flex", justifyContent: "center", alignItems: "center", height: windoHeight / 4 }}>
+                                <Text style={{ fontSize: 18, color: "black", fontWeight: "600" }}>No Image is Selected</Text>
+                            </View> :
+                                <Image source={{ uri: Image1 }} style={styles.ImageSeleted} />
+                        }
+                    </View>
+                    <TouchableOpacity style={{ marginHorizontal: 20, marginVertical: 10, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center", width: "50%", alignSelf: "flex-end" }} onPress={() => { Image64("Complete") }}>
+                        {
+                            loader ? <ActivityIndicator size={22} color="white" /> :
+                                <>
+                                    <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                        <Text style={{ color: "white", fontWeight: "600", marginRight: "5%" }}>Mark as Complete</Text>
+                                        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/189/189677.png" }} style={{ width: 20, height: 20 }} />
+                                    </View>
+                                </>
+                        }
 
-                </TouchableOpacity>
-                {/* <TouchableOpacity style={{ marginHorizontal: 20, backgroundColor: "#EE7523", borderRadius: 8, justifyContent: "center", paddingVertical: 13, alignItems: "center", marginVertical: 10 }} onPress={() => { Image64("Car not Present") }}>
-                    {
-                        loader ? <ActivityIndicator size={22} color="white" /> :
-                            <Text style={{ color: "white", fontWeight: "600" }}>CAR NOT PRESENT</Text>
-                    }
-
-                </TouchableOpacity> */}
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </>
     )
@@ -221,11 +237,11 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     InfoView: {
-        marginHorizontal: 10,
+        // marginHorizontal: 10,
         // borderWidth: 1,
         display: "flex",
         flexDirection: "row",
-        paddingHorizontal: 10,
+        // paddingHorizontal: 10,
         marginVertical: 10
     },
     InfoViewText: {
@@ -237,14 +253,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        // justifyContent: "space-between",
         paddingHorizontal: 10,
-        marginTop: "5%"
+        marginTop: "5%",
+        alignItems: "center"
     },
     IVText: {
         fontSize: 18,
         color: "black",
-        fontWeight: "700"
+        fontWeight: "700",
+        width: "60%"
     },
     Box: {
         borderRadius: 6,
@@ -260,11 +278,34 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     CameraIcon: {
-        width: windoWidth / 6.5,
-        height: windoHeight / 14
+        // width: windoWidth / 6.5,
+        // height: windoHeight / 14
+        width: 30,
+        height: 30
     },
     OpenCam: {
         fontSize: 13,
         color: 'black'
+    },
+    MainCont: {
+        borderWidth: 1,
+        borderColor: "#EE7523",
+        marginHorizontal: 15,
+        // backgroundColor: "#ffcbbf",
+        elevation: 10,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        backgroundColor: "white",
+        shadowColor: "#EE7523"
+    },
+    UploadContainer: {
+        borderWidth: 1,
+        borderColor: "#EE7523",
+        marginHorizontal: 15,
+        borderRadius: 8,
+        marginVertical: 20,
+        backgroundColor: "white",
+        elevation: 10,
+        shadowColor: "#EE7523"
     }
 })

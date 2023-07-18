@@ -7,6 +7,7 @@ import { setUserID, setUserDetails } from '../../redux/actions/userAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import Lottie from 'lottie-react-native';
 const SignIn = ({ navigation }) => {
     const [MobNum, setMobNum] = useState("")
     const [passwod, setPasswod] = useState("")
@@ -110,6 +111,8 @@ const SignIn = ({ navigation }) => {
                         </Pressable>
                     </View>
                 </View>
+
+
             </View >
         </>
     )

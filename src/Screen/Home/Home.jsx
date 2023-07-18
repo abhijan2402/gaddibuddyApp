@@ -10,6 +10,7 @@ import { UpdateStatus } from "../../APIs/UpdateJob";
 import CheckInOut from '../../Components/CheckInOut';
 import { CheckIn } from '../../APIs/Post/CheckIn';
 import { CheckOut } from '../../APIs/Post/CheckOut';
+import Lottie from 'lottie-react-native';
 const Home = ({ navigation }) => {
   const { userID, user } = useSelector(state => state.user);
   const [data, setdata] = useState([])
@@ -25,6 +26,7 @@ const Home = ({ navigation }) => {
   const [wholedata, setwholedata] = useState([])
   const [searchMod, setsearchMod] = useState(false)
   const [visibleData, setvisibleData] = useState(false)
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -223,6 +225,7 @@ const Home = ({ navigation }) => {
       <View style={{ display: visibleData ? "flex" : "none", height: windoHeight, backgroundColor: "#f5f5f7" }}>
         <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <HomeHeader />
+
           <TouchableOpacity style={{ borderRadius: 8, marginHorizontal: 20, backgroundColor: '#EE7523', paddingHorizontal: 20, paddingVertical: 5 }} onPress={test}>
             <Text style={{ fontSize: 15, color: "white" }}>Refresh</Text>
           </TouchableOpacity>

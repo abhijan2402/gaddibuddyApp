@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-28:/values-fr/values-fr.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-29:/values-fr/values-fr.xml",
             "map": [
                 {
                     "source": "C:\\selfProjects\\Assign_Intern\\node_modules\\react-native-date-picker\\android\\build\\intermediates\\packaged_res\\debug\\values-fr\\values-fr.xml",

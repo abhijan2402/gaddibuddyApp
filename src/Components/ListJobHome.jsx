@@ -26,19 +26,28 @@ const ListJobHome = ({ item, onPress }) => {
     return (
         <View style={styles.MainView}>
             <View style={styles.ContainerDetailStyle}>
-                <Text style={styles.DetailStyle}>Service - </Text>
+                <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3631/3631163.png" }} style={{ width: 30, height: 30, marginRight: "2%" }} />
+                <Text style={[styles.DetailStyle,]}>Service - </Text>
                 <Text style={styles.DetailStyle}>{item.service}</Text>
             </View>
             <View style={styles.ContainerDetailStyle}>
-                <Text style={styles.DetailStyle}>Service Type - </Text>
+                <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3277/3277487.png" }} style={{ width: 27, height: 27, marginRight: "2%" }} />
+                <Text style={[styles.DetailStyle,]}>Service Type - </Text>
                 <Text style={styles.DetailStyle}>{item.serviceType}</Text>
             </View>
             <View style={styles.ContainerDetailStyle}>
-                <Text style={styles.DetailStyle}>Start Date - </Text>
+                <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3085/3085330.png" }} style={{ width: 30, height: 30, marginRight: "2%" }} />
+                <Text style={[styles.DetailStyle,]}>Car Details - </Text>
+                <Text style={[styles.DetailStyle, { width: "63%" }]}>{item.carId.carMake} {item.carId.carType} - {item.carId.carNo}</Text>
+            </View>
+            <View style={styles.ContainerDetailStyle}>
+                <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/11451/11451317.png" }} style={{ width: 24, height: 24, marginRight: "3%" }} />
+                <Text style={[styles.DetailStyle,]}>Start Date - </Text>
                 <Text style={styles.DetailStyle}>{item.start.slice(0, 10)}</Text>
             </View>
             <View style={[styles.MainViewText, { display: "flex", flexDirection: "row", alignItems: "center" }]}>
-                <Text style={styles.DetailStyle}>Status - </Text>
+                <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3593/3593591.png" }} style={{ width: 24, height: 24, marginRight: "3%" }} />
+                <Text style={[styles.DetailStyle,]}>Status - </Text>
                 {
                     item.serviceStatus == "Complete" ?
                         <>
@@ -53,9 +62,9 @@ const ListJobHome = ({ item, onPress }) => {
 
                 }
             </View>
-
             <TouchableOpacity style={styles.CarView} onPress={onPress}>
-                <Text style={styles.CarText}>See Car details</Text>
+                <Text style={styles.CarText}>See More</Text>
+                <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/1635/1635581.png" }} style={{ width: 24, height: 24, marginRight: "3%" }} />
             </TouchableOpacity>
         </View>
     )
@@ -65,7 +74,7 @@ export default ListJobHome
 
 const styles = StyleSheet.create({
     MainView: {
-        borderWidth: 2,
+        borderWidth: 0.5,
         marginHorizontal: 10,
         marginVertical: 10,
         borderRadius: 8,
@@ -73,7 +82,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         borderColor: "#EE7523",
         backgroundColor: "white",
-        elevation: 5,
+        elevation: 7,
         shadowColor: "#EE7528"
     },
     MainViewText: {
@@ -83,15 +92,20 @@ const styles = StyleSheet.create({
         marginRight: "2%"
     },
     CarView: {
-        justifyContent: "flex-end",
+        // justifyContent: "flex-end",
         marginHorizontal: 10,
-        width: windoWidth / 3,
+        width: windoWidth / 3.3,
         textAlign: "center",
         paddingHorizontal: 4,
         paddingVertical: 5,
         borderRadius: 8,
         backgroundColor: "#EE7523",
-        alignSelf: "flex-end"
+        alignSelf: "flex-end",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+        marginTop: "4%"
     },
     CarText: {
         textAlign: "center",
@@ -100,12 +114,13 @@ const styles = StyleSheet.create({
     ContainerDetailStyle: {
         display: "flex",
         flexDirection: "row",
-        marginVertical: 5
+        marginVertical: 5,
+        alignItems: "center"
     },
     DetailStyle: {
         fontSize: 15,
         color: "black",
-        fontWeight: "600"
+        fontWeight: "600",
     }
 
 

@@ -5,7 +5,7 @@ const windoHeight = Dimensions.get('window').height;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserID, setUserDetails } from '../../redux/actions/userAction';
-
+import Lottie from 'lottie-react-native';
 const Account = ({ navigation }) => {
   const dispatch = useDispatch();
   const { userID, userDetails } = useSelector(state => state.user);
@@ -30,7 +30,10 @@ const Account = ({ navigation }) => {
       </View>
       <View style={{}}>
         <View style={styles.MidView}>
-          <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9131/9131529.png" }} style={{ width: 45, height: 45, marginRight: "3%" }} />
+          <Lottie
+            source={require('./../../assests/userProfile.json')} style={{ width: 75, height: 75, }} autoPlay
+            loop />
+          {/* <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9131/9131529.png" }} style={{ width: 45, height: 45, marginRight: "3%" }} /> */}
           <View>
             <View style={styles.NameView}>
               <Text style={styles.NameText}>Hello</Text>

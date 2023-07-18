@@ -42,7 +42,7 @@ export const Input = StyleSheet.create({
     },
     ImageLogo: {
         width: windoWidth - 50,
-        height: windoHeight / 10
+        height: windoHeight / 5.8
     },
     LogoView: {
         display: "flex",
